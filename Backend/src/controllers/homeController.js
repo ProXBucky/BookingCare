@@ -1,4 +1,4 @@
-// import { all } from "sequelize/types/lib/operators"
+
 import db from "../models/index"
 import CRUDservices from "../services/CRUDservices"
 

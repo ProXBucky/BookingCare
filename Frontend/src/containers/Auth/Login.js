@@ -4,24 +4,24 @@ import { push } from "connected-react-router";
 
 import * as actions from "../../store/actions";
 import './Login.scss';
-// import { FormattedMessage } from 'react-intl';
+import { handleLoginAPI } from '../../services/userService';
+import { userLoginSuccess } from '../../store/actions';
 
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
+            email: '',
             password: '',
             isShowPassword: false,
             errMessage: '',
-
         }
     }
 
-    handleChangeUsername = (e) => {
+    handleChangeEmail = (e) => {
         this.setState({
-            username: e.target.value
+            email: e.target.value
         })
     }
 
@@ -31,9 +31,32 @@ class Login extends Component {
         })
     }
 
-    handleLogin = () => {
-        console.log(this.state.username);
-        console.log(this.state.password);
+    handleLogin = async () => {
+        this.setState({
+            errMessage: '',
+        })
+        try {
+            let data = await handleLoginAPI(this.state.email, this.state.password);
+            if (data && data.errCode !== 0) {
+                this.setState({
+                    errMessage: data.message
+                })
+            }
+            if (data && data.errCode === 0) {
+                this.props.userLoginSuccess(data.user);
+                console.log('loging success');
+            }
+
+        } catch (e) {
+            if (e.response) {
+                if (e.response.data) {
+                    this.setState({
+                        errMessage: e.response.data.message,
+                    })
+                }
+            }
+            console.log("error---->", e.response)
+        }
     }
 
     handleShowHidePassword = () => {
@@ -48,13 +71,13 @@ class Login extends Component {
                     <div className="login-content row ">
                         <div className="col-12 text-center login-title">Login</div>
                         <div className="col-12 form-group">
-                            <label>Username: </label>
+                            <label>Email: </label>
                             <input
                                 type="text"
                                 className="form-control login-input"
-                                placeholder="Enter your user name"
-                                value={this.state.username}
-                                onChange={(e) => this.handleChangeUsername(e)}
+                                placeholder="Enter your email"
+                                value={this.state.email}
+                                onChange={(e) => this.handleChangeEmail(e)}
 
                             />
 
@@ -75,7 +98,9 @@ class Login extends Component {
                                 </span>
                             </div>
                         </div>
-                        <div className='col-12'>{this.state.errMessage}</div>
+                        <div className='col-12' style={{ color: "red" }}>
+                            {this.state.errMessage}
+                        </div>
                         <div className="col-12">
                             <button
                                 className="btn-login"
@@ -109,8 +134,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         navigate: (path) => dispatch(push(path)),
-        adminLoginSuccess: (adminInfo) => dispatch(actions.adminLoginSuccess(adminInfo)),
-        adminLoginFail: () => dispatch(actions.adminLoginFail()),
+        // userLoginFail: () => dispatch(actions.userLoginFail()),
+        userLoginSuccess: (userInfo) => dispatch(actions.userLoginSuccess(userInfo))
     };
 };
 

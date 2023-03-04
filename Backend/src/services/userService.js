@@ -27,7 +27,7 @@ let handleLoginPage = (emailTemp, passwordTemp) => {
                     }
                 } else {
                     userData.errCode = 2;
-                    userData.message = `User not found`;
+                    userData.message = `User's not found`;
                 }
 
             } else {
@@ -35,6 +35,7 @@ let handleLoginPage = (emailTemp, passwordTemp) => {
                 userData.message = `Email's not exist, please type different email`;
             }
             resolve(userData)
+            console.log(userData);
         }
         catch (e) {
             reject(e);

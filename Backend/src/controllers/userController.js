@@ -7,7 +7,6 @@ let handleLogin = async (req, res) => {
         return res.status(500).json({
             errCode: 1,
             message: 'Not enough peremeter',
-            user: {}
         })
     }
     else {
@@ -15,7 +14,7 @@ let handleLogin = async (req, res) => {
         return res.status(200).json({
             errCode: userData.errCode,
             message: userData.message,
-            user: userData.user
+            user: userData.user ? userData.user : {}
         })
 
     }
