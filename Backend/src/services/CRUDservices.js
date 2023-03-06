@@ -1,5 +1,5 @@
-import bcrypt from 'bcryptjs';
 import db from '../models/index';
+import bcrypt from 'bcryptjs';
 let salt = bcrypt.genSaltSync(10);
 
 let createNewUser = async (data) => {

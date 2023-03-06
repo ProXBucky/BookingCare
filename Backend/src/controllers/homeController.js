@@ -59,6 +59,7 @@ let putCRUD = async (req, res) => {
         console.log(e);
     }
 }
+
 let deleteCRUD = async (req, res) => {
     let idUser = req.query.id
     if (idUser) {

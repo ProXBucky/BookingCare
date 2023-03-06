@@ -20,6 +20,49 @@ let handleLogin = async (req, res) => {
     }
 }
 
+let handleGetAllUser = async (req, res) => {
+    let id = req.query.id;
+    if (!id) {
+        return res.status(500).json({
+            errCode: 1,
+            errMessage: 'ERROR',
+            user: []
+        })
+    }
+    if (id) {
+        let data = await userService.getAllUser(id)
+        return res.status(200).json({
+            errCode: 0,
+            errMessage: 'SUCCEED',
+            user: data
+        })
+
+    }
+}
+
+let handleCreateNewUser = async (req, res) => {
+    let message = await userService.createNewUser(req.body);
+    return res.status(200).json(message)
+}
+
+let handleEditUser = async (req, res) => {
+    let message = await userService.editUser(req.body)
+    return res.status(200).json(message)
+}
+
+let handleDeleteUser = async (req, res) => {
+    let message = await userService.deleteUser(req.body.id)
+    return res.status(200).json(message)
+
+}
+
 module.exports = {
-    handleLogin: handleLogin
+    handleLogin: handleLogin,
+    handleGetAllUser: handleGetAllUser,
+    handleCreateNewUser: handleCreateNewUser,
+    handleEditUser: handleEditUser,
+    handleDeleteUser: handleDeleteUser,
+
+
+
 }
