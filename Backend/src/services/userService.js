@@ -107,19 +107,20 @@ let createNewUser = async (data) => {
                     errMessage: `Email is used, please type diffirent email`,
                 })
             }
-            let hashPassword = await hashUserPassword(data.password);
-            await db.User.create({
-                email: data.email,
-                password: hashPassword,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                address: data.address,
-                gender: data.gender === 1 ? true : false,
-                roleId: data.roleId,
-                phonenumber: data.phonenumber,
-                positionId: data.positionId,
-            })
-
+            else {
+                let hashPassword = await hashUserPassword(data.password);
+                await db.User.create({
+                    email: data.email,
+                    password: hashPassword,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    address: data.address,
+                    gender: data.gender === 1 ? true : false,
+                    roleId: data.roleId,
+                    phonenumber: data.phonenumber,
+                    positionId: data.positionId,
+                })
+            }
             resolve({
                 errCode: 0,
                 errMessage: 'Create new user succeed'
@@ -156,6 +157,7 @@ let editUser = (user) => {
 
 let deleteUser = (userId) => {
     return new Promise(async (resolve, reject) => {
+        //console.log(userId)
         try {
             if (!userId) {
                 resolve({
@@ -163,14 +165,15 @@ let deleteUser = (userId) => {
                     errMessage: `User's not exist`
                 })
             }
-            let tmp = await db.User.findOne({ where: { id: userId } })
+            let tmp = await db.User.findOne({ where: { id: userId.id } })
+            //console.log(tmp)
             if (!tmp) {
                 resolve({
                     errCode: 2,
                     errMessage: `User's not found`
                 })
             }
-            await db.User.destroy({ where: { id: userId } })
+            await db.User.destroy({ where: { id: userId.id } })
             resolve({
                 errCode: 0,
                 errMessage: 'Delete succeed'
