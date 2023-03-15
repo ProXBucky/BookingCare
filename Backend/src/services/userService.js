@@ -1,6 +1,5 @@
 import db from "../models/index"
 import bcrypt from 'bcryptjs';
-import { removeAllListeners } from "nodemon";
 let salt = bcrypt.genSaltSync(10);
 
 let handleLoginPage = (emailTemp, passwordTemp) => {
@@ -8,7 +7,7 @@ let handleLoginPage = (emailTemp, passwordTemp) => {
     return new Promise(async (resolve, reject) => {
         try {
             let isExist = await checkEmailExist(emailTemp);
-            var attributes = ['email', 'password', 'roleId'];
+            var attributes = ['email', 'password', 'roleId' ,'firstName', 'lastName'];
             if (isExist) {
                 let user = await db.User.findOne({
                     where: { email: emailTemp },
@@ -184,12 +183,35 @@ let deleteUser = (userId) => {
     })
 }
 
+let getAllCodeService = (type) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!type) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing type parameter'
+                });
+            }
+            else {
+                let res = {};
+                let data = await db.Allcode.findAll({ where: { type: type } });
+                res.errCode = 0;
+                res.data = data;
+                resolve(res);
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     handleLoginPage: handleLoginPage,
     getAllUser: getAllUser,
     createNewUser: createNewUser,
     editUser: editUser,
-    deleteUser: deleteUser
+    deleteUser: deleteUser,
+    getAllCodeService: getAllCodeService,
 
 }
 
