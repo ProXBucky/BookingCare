@@ -21,10 +21,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       address: {
-        type : Sequelize.STRING
+        type: Sequelize.STRING
       },
-      gender : {
-        type : Sequelize.BOOLEAN
+      gender: {
+        type: Sequelize.STRING
       },
       roleId: {
         type: Sequelize.STRING

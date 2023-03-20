@@ -1,33 +1,99 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    isLoggedIn: false,
-    adminInfo: null
+    genders: [],
+    positions: [],
+    roles: [],
+    users: [],
+    isLoadingRedux: '',
 }
 
-const appReducer = (state = initialState, action) => {
+const adminReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.ADMIN_LOGIN_SUCCESS:
+        case actionTypes.FETCH_GENDER_FIRST:
+            console.log('fetch gender first')
+            state.isLoadingRedux = true
             return {
                 ...state,
-                isLoggedIn: true,
-                adminInfo: action.adminInfo
             }
-        case actionTypes.ADMIN_LOGIN_FAIL:
+        case actionTypes.FETCH_GENDER_SUCCESS:
+            console.log('fetch gender success')
+            state.genders = action.data;
+            state.isLoadingRedux = false
             return {
                 ...state,
-                isLoggedIn: false,
-                adminInfo: null
             }
-        case actionTypes.PROCESS_LOGOUT:
+        case actionTypes.FETCH_GENDER_FAILED:
+            console.log('fetch gender fail')
+            state.isLoadingRedux = false
             return {
                 ...state,
-                isLoggedIn: false,
-                adminInfo: null
+            }
+
+        case actionTypes.FETCH_ROLE_FIRST:
+            console.log('fetch ROLE first')
+            state.isLoadingRedux = true
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ROLE_SUCCESS:
+            console.log('fetch ROLE success')
+            state.roles = action.data;
+            state.isLoadingRedux = false
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ROLE_FAILED:
+            console.log('fetch ROLE fail')
+            state.isLoadingRedux = false
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_POSITION_FIRST:
+            console.log('fetch POSITION first')
+            state.isLoadingRedux = true
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_POSITION_SUCCESS:
+            console.log('fetch POSITION success')
+            state.isLoadingRedux = false
+            state.positions = action.data;
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_POSITION_FAILED:
+            console.log('fetch POSITION fail')
+            state.isLoadingRedux = false
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_ALL_USERS_SUCCESS:
+            console.log('fetch all user success')
+            state.users = action.user;
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ALL_USERS_FAILED:
+            console.log('fetch all user fail')
+            return {
+                ...state,
+            }
+        case actionTypes.DELETE_USER_SUCCESS:
+            console.log('delete user success')
+            return {
+                ...state,
+            }
+        case actionTypes.DELETE_USER_FAILED:
+            console.log('delete  user fail')
+            return {
+                ...state,
             }
         default:
             return state;
     }
 }
 
-export default appReducer;
+export default adminReducer;

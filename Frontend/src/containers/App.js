@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter as Router } from 'connected-react-router';
 import { history } from '../redux'
-import { ToastContainer } from 'react-toastify';
 import CustomScrollBars from '../components/CustomScrollbars';
 import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authentication';
 import { path } from '../utils'
@@ -11,7 +10,9 @@ import Home from '../routes/Home';
 import Login from './Auth/Login'
 import System from '../routes/System';
 import HomePage from './HomePage/HomePage';
-import { CustomToastCloseButton } from '../components/CustomToast';
+// import { CustomToastCloseButton } from '../components/CustomToast';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 class App extends Component {
 
     handlePersistorState = () => {
@@ -47,11 +48,24 @@ class App extends Component {
                                 </Switch>
                             </CustomScrollBars>
                         </div>
-                        <ToastContainer
+                        {/* <ToastContainer
                             className="toast-container" toastClassName="toast-item" bodyClassName="toast-item-body"
                             autoClose={false} hideProgressBar={true} pauseOnHover={false}
                             pauseOnFocusLoss={true} closeOnClick={false} draggable={false}
                             closeButton={<CustomToastCloseButton />}
+                        /> */}
+
+                        <ToastContainer
+                            position="top-right"
+                            autoClose={5000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="light"
                         />
                     </div>
 

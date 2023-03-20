@@ -14,7 +14,7 @@ class Header extends Component {
     }
 
     render() {
-        console.log('check redux user', this.props.userInfo)
+        // console.log('check redux user', this.props.userInfo)
         const { processLogout, userInfo, language } = this.props;
         return (
             <div className="header-container">

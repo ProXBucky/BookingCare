@@ -7,7 +7,7 @@ let handleLoginPage = (emailTemp, passwordTemp) => {
     return new Promise(async (resolve, reject) => {
         try {
             let isExist = await checkEmailExist(emailTemp);
-            var attributes = ['email', 'password', 'roleId' ,'firstName', 'lastName'];
+            var attributes = ['email', 'password', 'roleId', 'firstName', 'lastName'];
             if (isExist) {
                 let user = await db.User.findOne({
                     where: { email: emailTemp },
@@ -95,7 +95,6 @@ let hashUserPassword = (password) => {
     })
 }
 
-
 let createNewUser = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -114,7 +113,7 @@ let createNewUser = async (data) => {
                     firstName: data.firstName,
                     lastName: data.lastName,
                     address: data.address,
-                    gender: data.gender === 1 ? true : false,
+                    gender: data.gender,
                     roleId: data.roleId,
                     phonenumber: data.phonenumber,
                     positionId: data.positionId,
@@ -164,7 +163,8 @@ let deleteUser = (userId) => {
                     errMessage: `User's not exist`
                 })
             }
-            let tmp = await db.User.findOne({ where: { id: userId.id } })
+            let tmp = await db.User.findOne({ where: { id: userId } })
+            // let tmp = await db.User.findOne({ where: { id: userId.id } })
             //console.log(tmp)
             if (!tmp) {
                 resolve({
@@ -172,7 +172,8 @@ let deleteUser = (userId) => {
                     errMessage: `User's not found`
                 })
             }
-            await db.User.destroy({ where: { id: userId.id } })
+            await db.User.destroy({ where: { id: userId } })
+            // await db.User.destroy({ where: { id: userId.id } })
             resolve({
                 errCode: 0,
                 errMessage: 'Delete succeed'

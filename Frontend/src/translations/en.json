@@ -35,5 +35,21 @@
             "handbook": "Handbook",
             "handbook-manage": "Manage handbook"
         }
+    },
+    "manage-user": {
+        "title": "Manage user using Redux",
+        "add": "Add new user with Redux",
+        "email": "Email",
+        "password": "Password",
+        "firstname": "First Name",
+        "lastname": "Last Name",
+        "phonenumber": "Phone Number",
+        "address": "Address",
+        "gender": "Gender",
+        "position": "Position",
+        "roleId": "Role",
+        "image": "Avatar",
+        "save-btn": "Save user",
+        "upload": "Upload  "
     }
 }

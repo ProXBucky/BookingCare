@@ -35,5 +35,21 @@
             "handbook": "Cẩm nang",
             "handbook-manage": "Quản lý cẩm nang"
         }
+    },
+    "manage-user": {
+        "title": "Quản lý người dùng với Redux",
+        "add": "Tạo người dùng",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "firstname": "Họ",
+        "lastname": "Tên",
+        "phonenumber": "Số điện thoại",
+        "address": "Địa chỉ",
+        "gender": "Giới tính",
+        "position": "Chức danh",
+        "roleId": "Vai trò",
+        "image": "Ảnh đại diện",
+        "save-btn": "Lưu người dùng",
+        "upload": "Tải ảnh lên  "
     }
 }
