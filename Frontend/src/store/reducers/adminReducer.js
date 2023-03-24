@@ -6,6 +6,8 @@ const initialState = {
     roles: [],
     users: [],
     isLoadingRedux: '',
+    topDoctors: [],
+    doctors: [],
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -88,6 +90,39 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.DELETE_USER_FAILED:
             console.log('delete  user fail')
+            return {
+                ...state,
+            }
+
+        case actionTypes.EDIT_USER_SUCCESS:
+            console.log('EDIT user success')
+            return {
+                ...state,
+            }
+        case actionTypes.EDIT_USER_FAILED:
+            console.log('EDIT  user fail')
+            return {
+                ...state,
+            }
+        case actionTypes.GET_TOP_DOCTOR_SUCCESS:
+            console.log('get top doctor success')
+            state.topDoctors = action.data
+            return {
+                ...state,
+            }
+        case actionTypes.GET_TOP_DOCTOR_FAILED:
+            console.log('get  top doctor fail')
+            return {
+                ...state,
+            }
+        case actionTypes.GET_ALL_DOCTOR_SUCCESS:
+            console.log('get ALL doctor success')
+            state.doctors = action.data
+            return {
+                ...state,
+            }
+        case actionTypes.GET_ALL_DOCTOR_FAILED:
+            console.log('get ALL doctor fail')
             return {
                 ...state,
             }

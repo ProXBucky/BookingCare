@@ -117,6 +117,7 @@ let createNewUser = async (data) => {
                     roleId: data.roleId,
                     phonenumber: data.phonenumber,
                     positionId: data.positionId,
+                    image: data.avatar,
                 })
             }
             resolve({
@@ -132,13 +133,23 @@ let createNewUser = async (data) => {
 let editUser = (user) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!user.id) {
+            if (!user.id || !user.roleId || !user.positionId || !user.gender) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing value parameter',
                 })
             }
-            await db.User.update({ firstName: user.firstName, lastName: user.lastName, address: user.address }, {
+            await db.User.update({
+                firstName: user.firstName,
+                lastName: user.lastName,
+                phonenumber: user.phonenumber,
+                address: user.address,
+                gender: user.gender,
+                roleId: user.roleId,
+                positionId: user.positionId,
+                image: user.avatar
+
+            }, {
                 where: {
                     id: user.id
                 }

@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      key: {
+      keyMap: {
         type: Sequelize.STRING
       },
       type: {
@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       valueVi: {
-        type : Sequelize.STRING
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -28,7 +28,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-      
+
     });
   },
   down: async (queryInterface, Sequelize) => {

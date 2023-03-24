@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import "./AboutPage.scss"
+import { FormattedMessage } from 'react-intl'
+
 
 class AboutPage extends Component {
 
@@ -9,7 +11,7 @@ class AboutPage extends Component {
             <div className='section-container about-page-content'>
                 <div className='content-section'>
                     <div className='section-title'>
-                        <span>Truyền thông nói về BookingCare</span>
+                        <span><FormattedMessage id={"section.media"} /></span>
                     </div>
                     <div className='section-body'>
                         <div className='body-left'>

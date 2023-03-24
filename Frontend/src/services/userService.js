@@ -26,4 +26,20 @@ const getAllCodes = (typeId) => {
     return axios.get(`/api/allcodes?type=${typeId}`)
 }
 
-export { handleLoginAPI, getAllUser, createUserService, deleteUserService, editUserService, getAllCodes }
+const getTopDoctorService = (limit) => {
+    return axios.get(`/api/get-top-doctor?limit=${limit}`)
+}
+
+const getAllDoctorService = () => {
+    return axios.get('/api/get-all-doctor')
+}
+
+const postInfoDoctorService = (data) => {
+    return axios.post('/api/post-info-doctor', data)
+}
+
+export {
+    handleLoginAPI, getAllUser, createUserService,
+    deleteUserService, editUserService, getAllCodes,
+    getTopDoctorService, getAllDoctorService, postInfoDoctorService
+}

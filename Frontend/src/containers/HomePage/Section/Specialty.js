@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import "./Specialty.scss"
+import { FormattedMessage } from 'react-intl'
 
 import Slider from "react-slick"
 
@@ -11,8 +12,8 @@ class Specialty extends Component {
             <div className='section-container specialty-content'>
                 <div className='content-section'>
                     <div className='section-title'>
-                        <span>Chuyên khoa phổ biến</span>
-                        <button>Xem thêm</button>
+                        <span><FormattedMessage id={"section.popular-specialty"} /></span>
+                        <button><FormattedMessage id={"section.see-more"} /></button>
                     </div>
                     <div className='section-slider'>
                         <Slider {...this.props.settings}>

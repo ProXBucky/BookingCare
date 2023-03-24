@@ -21,6 +21,16 @@
         "child5": "Sức khỏe tinh thần",
         "child6": "Khám nha khoa"
     },
+    "section": {
+        "popular-specialty": "Chuyên khoa phổ biến",
+        "outstanding-clinic": "Cơ sở y tế nổi bật",
+        "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
+        "handbook": "Cẩm nang",
+        "media": "Truyền thông",
+        "see-more": "Xem thêm",
+        "find": "Tìm kiếm",
+        "all-post": "Tất cả bài viết"
+    },
     "menu": {
         "admin": {
             "user": "Người dùng",
@@ -50,6 +60,7 @@
         "roleId": "Vai trò",
         "image": "Ảnh đại diện",
         "save-btn": "Lưu người dùng",
+        "edit-btn": "Lưu thay đổi",
         "upload": "Tải ảnh lên  "
     }
 }

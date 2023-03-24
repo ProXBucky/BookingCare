@@ -35,7 +35,7 @@
                     height: 120px;
                     width: 120px;
                     border-radius: 50%;
-                    background: url('../../assets/doctorImg/buckyDoctor.jpg') center center no-repeat;
+                    //  background: url('../../assets/doctorImg/buckyDoctor.jpg') center center no-repeat;
                 }
 
             }
@@ -144,6 +144,12 @@
                 }
 
 
+            }
+
+
+            //slick đầu cuối không có arrow
+            .slick-disabled {
+                display: none !important;
             }
 
             .slick-arrow {

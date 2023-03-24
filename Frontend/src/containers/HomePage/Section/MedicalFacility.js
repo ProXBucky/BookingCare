@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import "./MedicalFacility.scss"
+import { FormattedMessage } from 'react-intl'
+
 
 import Slider from "react-slick"
 
@@ -11,8 +13,8 @@ class MedicalFacility extends Component {
             <div className='section-container medical-facility-content'>
                 <div className='content-section'>
                     <div className='section-title'>
-                        <span>Cơ sở y tế nổi bật</span>
-                        <button>Tìm kiếm</button>
+                        <span><FormattedMessage id={"section.outstanding-clinic"} /></span>
+                        <button><FormattedMessage id={"section.find"} /></button>
                     </div>
                     <div className='section-slider'>
                         <Slider {...this.props.settings}>

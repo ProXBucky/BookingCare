@@ -12,7 +12,7 @@
         "welcome": "Welcome  "
     },
     "homebanner": {
-        "title1": "MEDICAL BACKGROUND",
+        "title1": "MEDICAL PLATFORM",
         "title2": "COMPREHENSIVE HEALTH CARE",
         "child1": "Specialist examination",
         "child2": "Remote examination",
@@ -20,6 +20,16 @@
         "child4": "Test medicine",
         "child5": "Spirit Health",
         "child6": "Dental examination"
+    },
+    "section": {
+        "popular-specialty": "Popular Specialties",
+        "outstanding-clinic": "Outstanding Clinics",
+        "outstanding-doctor": "Weekly famous doctors",
+        "handbook": "Handbook",
+        "media": "Media",
+        "see-more": "See more",
+        "find": "Find more",
+        "all-post": "All posts"
     },
     "menu": {
         "admin": {
@@ -50,6 +60,7 @@
         "roleId": "Role",
         "image": "Avatar",
         "save-btn": "Save user",
+        "edit-btn": "Save changes",
         "upload": "Upload  "
     }
 }
