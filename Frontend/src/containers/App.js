@@ -10,7 +10,7 @@ import Home from '../routes/Home';
 import Login from './Auth/Login'
 import System from '../routes/System';
 import HomePage from './HomePage/HomePage';
-// import { CustomToastCloseButton } from '../components/CustomToast';
+import DetailDoctor from './HomePage/PatientView/Doctor/DetailDoctor';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 class App extends Component {
@@ -45,6 +45,7 @@ class App extends Component {
                                     <Route path={path.HOMEPAGE} component={(HomePage)} />
                                     <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
+                                    <Route path="/detail-doctor/:id" component={(DetailDoctor)} />
                                 </Switch>
                             </CustomScrollBars>
                         </div>

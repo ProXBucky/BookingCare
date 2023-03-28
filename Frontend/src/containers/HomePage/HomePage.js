@@ -32,14 +32,13 @@ class HomePage extends Component {
         };
         return (
             <div>
-                <HomeHeader />
+                <HomeHeader isHideBanner={false} />
                 <Specialty settings={settings} />
                 <MedicalFacility settings={settings} />
                 <OutstandingDoctor settings={settings} />
                 <HandBook settings={settings2} />
                 <AboutPage />
                 <HomeFooter />
-                {/* <div style={{ height: "600px" }}></div> */}
             </div>
         )
     }

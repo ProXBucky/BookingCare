@@ -8,6 +8,7 @@ const initialState = {
     isLoadingRedux: '',
     topDoctors: [],
     doctors: [],
+    doctorInfo: {}
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -123,6 +124,17 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.GET_ALL_DOCTOR_FAILED:
             console.log('get ALL doctor fail')
+            return {
+                ...state,
+            }
+        case actionTypes.GET_INFO_DOCTOR_SUCCESS:
+            console.log('get INFO doctor success')
+            state.doctorInfo = action.data
+            return {
+                ...state,
+            }
+        case actionTypes.GET_INFO_DOCTOR_FAILED:
+            console.log('get INFO doctor fail')
             return {
                 ...state,
             }

@@ -46,6 +46,7 @@ const actionTypes = Object.freeze({
 
     POST_INFO_DOCTOR_SUCCESS: 'POST_INFO_DOCTOR_SUCCESS',
     POST_INFO_DOCTOR_FAILED: 'POST_INFO_DOCTOR_FAILED',
+
 })
 
 export default actionTypes;

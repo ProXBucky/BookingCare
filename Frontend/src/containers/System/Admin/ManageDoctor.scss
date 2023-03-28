@@ -41,4 +41,18 @@
             opacity: 0.9;
         }
     }
+
+    .button-edit-info-doctor {
+        margin: 10px 0px;
+        padding: 8px;
+        background-color: blue;
+        cursor: pointer;
+        outline: none;
+        border: none;
+        color: white;
+
+        &:hover {
+            opacity: 0.9;
+        }
+    }
 }

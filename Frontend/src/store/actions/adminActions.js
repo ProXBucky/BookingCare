@@ -1,5 +1,9 @@
 import actionTypes from './actionTypes';
-import { getAllCodes, createUserService, getAllUser, deleteUserService, editUserService, getTopDoctorService, getAllDoctorService, postInfoDoctorService } from '../../services/userService';
+import {
+    getAllCodes, createUserService, getAllUser, deleteUserService,
+    editUserService, getTopDoctorService, getAllDoctorService,
+    postInfoDoctorService, getDetailDoctorByIdService
+} from '../../services/userService';
 import { toast } from 'react-toastify';
 
 // Export gender, role, position
@@ -232,15 +236,15 @@ export const fetchAllDoctor = () => {
             let res = await getAllDoctorService();
             if (res && res.errCode === 0) {
                 dispatch(getAllDoctorSuccess(res.data))
-                console.log('get top doctor success')
+                console.log('get all doctor success')
             } else {
                 dispatch(getAllDoctorFailed())
-                console.log('get top doctor failed')
+                console.log('get all doctor failed')
 
             }
         } catch (e) {
             dispatch(getAllDoctorFailed())
-            console.log('get top doctor failed')
+            console.log('get all doctor failed')
 
         }
     }
@@ -285,6 +289,9 @@ export const postInforDoctorSuccess = (data) => ({
 export const postInforDoctorFailed = () => ({
     type: actionTypes.POST_INFO_DOCTOR_FAILED
 })
+
+
+
 
 
 

@@ -1,3 +1,4 @@
+
 import db from "../models";
 
 let getTopDoctorService = (limit) => {
@@ -48,23 +49,35 @@ let getAllDoctorService = () => {
 let postInfoDoctorService = (doctor) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!doctor.doctorId || !doctor.contentHTML || !doctor.contentMarkdown || !doctor.description) {
+            if (!doctor.doctorId || !doctor.contentHTML || !doctor.contentMarkdown || !doctor.description || !doctor.action) {
                 resolve({
                     errCode: 1,
                     errMessage: "Missing parameter"
                 })
             } else {
-                await db.Markdown.create({
-                    doctorId: doctor.doctorId,
-                    contentHTML: doctor.contentHTML,
-                    contentMarkdown: doctor.contentMarkdown,
-                    description: doctor.description
-                })
-                resolve({
-                    errCode: 0,
-                    errMessage: "Add information doctor success"
-                })
+                if (doctor.action === 'CREATE') {
+                    await db.Markdown.create({
+                        doctorId: doctor.doctorId,
+                        contentHTML: doctor.contentHTML,
+                        contentMarkdown: doctor.contentMarkdown,
+                        description: doctor.description
+                    })
+                } else if (doctor.action === 'EDIT') {
+                    await db.Markdown.update(
+                        {
+                            doctorId: doctor.doctorId,
+                            contentHTML: doctor.contentHTML,
+                            contentMarkdown: doctor.contentMarkdown,
+                            description: doctor.description,
+                        },
+                        { where: { doctorId: doctor.doctorId } }
+                    )
+                }
             }
+            resolve({
+                errCode: 0,
+                errMessage: "Add information doctor success"
+            })
         } catch (e) {
             console.log(e);
             reject(e);
@@ -72,8 +85,48 @@ let postInfoDoctorService = (doctor) => {
     })
 }
 
+let getDetailDoctor = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!id) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing parameter'
+                })
+            } else {
+                let data = await db.User.findOne({
+                    attributes: { exclude: ['password'] },
+                    where: { id: id },
+                    include: [
+                        { model: db.Markdown, attributes: ['description', 'contentHTML', 'contentMarkdown'] },
+                        { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
+                    ],
+                    raw: 'true',
+                    nest: 'true',
+                })
+                if (data) {
+                    let imageBase64 = ''
+                    if (data.image) {
+                        imageBase64 = new Buffer(data.image, 'base64').toString('Binary');    //decode image avatar from buffer to base64
+                    }
+                    data.image = imageBase64
+                }
+                resolve({
+                    errCode: 0,
+                    data: data
+                })
+
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+
 module.exports = {
     getTopDoctorService: getTopDoctorService,
     getAllDoctorService: getAllDoctorService,
     postInfoDoctorService: postInfoDoctorService,
+    getDetailDoctor: getDetailDoctor,
 }

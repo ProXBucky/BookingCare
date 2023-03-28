@@ -17,9 +17,9 @@ class AboutPage extends Component {
                         <div className='body-left'>
                             <iframe width="100%" height="320px"
                                 src="https://www.youtube.com/embed/d8zgdc4Ztuo"
-                                title="Patrick Patrikios | Oh My" frameborder="0"
+                                title="Patrick Patrikios | Oh My" frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen>
+                                allowFullScreen>
                             </iframe>
 
                         </div>

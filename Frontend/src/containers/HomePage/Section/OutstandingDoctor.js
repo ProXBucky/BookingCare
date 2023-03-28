@@ -4,10 +4,10 @@ import { languages } from "../../../utils"
 import Slider from "react-slick"
 import * as actions from "../../../store/actions"
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from "react-router-dom";
 
 
 class OutstandingDoctor extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -27,9 +27,14 @@ class OutstandingDoctor extends Component {
         }
     }
 
+    handleDetailDoctor = (item) => {
+        this.props.history.push(`/detail-doctor/${item.id}`)
+    }
+
 
     render() {
-        console.log(this.state.outstandingDoctor)
+        // console.log(this.state)
+
         return (
             <div className='section-container outstanding-doctor-content'>
                 <div className='content-section'>
@@ -49,7 +54,7 @@ class OutstandingDoctor extends Component {
                                         imageBase64 = new Buffer(item.image, 'base64').toString('Binary');    //decode image avatar from buffer to base64
                                     }
                                     return (
-                                        <div className='slider' key={index}>
+                                        <div className='slider' key={index} onClick={() => this.handleDetailDoctor(item)}>
                                             <div className='outer'>
                                                 <div className='image'
                                                     style={{ backgroundImage: `url(${imageBase64})` }}
@@ -87,4 +92,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutstandingDoctor);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OutstandingDoctor));

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { languages } from "../../../utils"
+import { languages, CRUD_METHOD } from "../../../utils"
 import * as actions from '../../../store/actions'
 import './ManageDoctor.scss'
+import { getDetailDoctorByIdService } from "../../../services/userService"
 
 import Select from 'react-select';
 import MarkdownIt from 'markdown-it';
@@ -22,6 +23,8 @@ class ManageDoctor extends Component {
             contentMarkdown: '',
             description: '',
             doctorArr: [],
+            hasOldData: false,
+            action: '',
         }
     }
 
@@ -66,8 +69,28 @@ class ManageDoctor extends Component {
         })
     }
 
-    handleChange = (selectedOption) => {
+    handleChangeMarkdown = async (selectedOption) => {
         this.setState({ selectedOption })
+        let res = await getDetailDoctorByIdService(selectedOption.value)
+        if (res && res.errCode === 0 && res.data && res.data.Markdown && res.data.Markdown.description) {
+            console.log('case1')
+            let markdown = res.data.Markdown
+            this.setState({
+                description: markdown.description,
+                contentHTML: markdown.contentHTML,
+                contentMarkdown: markdown.contentMarkdown,
+                hasOldData: true,
+            })
+        }
+        else {
+            console.log('case2')
+            this.setState({
+                description: '',
+                contentHTML: '',
+                contentMarkdown: '',
+                hasOldData: false
+            })
+        }
     };
 
     handleChangeDescription = (e) => {
@@ -77,12 +100,19 @@ class ManageDoctor extends Component {
     }
 
     handleSaveInfoDoctor = () => {
-        console.log(this.state);
         this.props.postInfoDoctor({
             doctorId: this.state.selectedOption.value,
             contentHTML: this.state.contentHTML,
             contentMarkdown: this.state.contentMarkdown,
-            description: this.state.description
+            description: this.state.description,
+            action: this.state.hasOldData === true ? CRUD_METHOD.EDIT : CRUD_METHOD.CREATE,
+        })
+        this.setState({
+            hasOldData: false,
+            selectedOption: '',
+            contentHTML: '',
+            contentMarkdown: '',
+            description: '',
         })
 
     }
@@ -97,19 +127,23 @@ class ManageDoctor extends Component {
                             <label>Chọn bác sỹ</label>
                             <Select
                                 value={this.state.selectedOption}
-                                onChange={this.handleChange}
+                                onChange={this.handleChangeMarkdown}
                                 options={this.state.doctorArr}
                             />
                         </div>
                         <div className='body-right'>
                             <label>Thông tin giới thiệu</label>
-                            <textarea className='form-control' rows="4" onChange={(e) => this.handleChangeDescription(e)}></textarea>
+                            <textarea className='form-control' value={this.state.description} rows="4" onChange={(e) => this.handleChangeDescription(e)}></textarea>
                         </div>
                     </div>
                     <div className='markdown'>
-                        <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={this.handleEditorChange} />
+                        <MdEditor style={{ height: '500px' }}
+                            renderHTML={text => mdParser.render(text)}
+                            onChange={this.handleEditorChange}
+                            value={this.state.contentMarkdown}
+                        />
                     </div>
-                    <button className='button-save-info-doctor' onClick={() => this.handleSaveInfoDoctor()}>Lưu thông tin</button>
+                    <button className={this.state.hasOldData === true ? 'button-edit-info-doctor' : 'button-save-info-doctor'} onClick={() => this.handleSaveInfoDoctor()}>{this.state.hasOldData === true ? 'Sửa thông tin' : 'Lưu thông tin'}</button>
                 </div>
 
 
