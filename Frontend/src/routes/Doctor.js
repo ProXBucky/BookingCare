@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from 'react-router-dom';
-import UserManage from '../containers/System/UserManage';
-import UserRedux from '../containers/System/Admin/UserRedux';
-import ManageDoctor from "../containers/System/Admin/ManageDoctor"
 import Header from '../containers/Header/Header';
-import ManageDoctorSchedule from '../containers/System/Doctor/ManageDoctorSchedule';
-class System extends Component {
+import ManageDoctorSchedule from '../containers/System/Doctor/ManageDoctorSchedule'
+
+class Doctor extends Component {
     render() {
         const { systemMenuPath } = this.props;
         return (
@@ -14,11 +12,7 @@ class System extends Component {
                 {this.props.isLoggedIn && <Header />}
                 <div className="system-list">
                     <Switch>
-                        <Route path="/system/user-manage" component={UserManage} />
-                        <Route path="/system/user-redux" component={UserRedux} />
-                        <Route path="/system/manage-doctor" component={ManageDoctor} />
                         <Route path="/doctor/manage-doctor-schedule" component={ManageDoctorSchedule} />
-                        <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
                     </Switch>
                 </div>
             </div>
@@ -28,7 +22,6 @@ class System extends Component {
 
 const mapStateToProps = state => {
     return {
-        systemMenuPath: state.app.systemMenuPath,
         isLoggedIn: state.user.isLoggedIn
     };
 };
@@ -38,4 +31,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(System);
+export default connect(mapStateToProps, mapDispatchToProps)(Doctor);

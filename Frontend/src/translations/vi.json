@@ -44,6 +44,10 @@
             "specialty-manage": "Quản lý chuyên khoa",
             "handbook": "Cẩm nang",
             "handbook-manage": "Quản lý cẩm nang"
+        },
+        "doctor": {
+            "manage-doctor": "Quản lý bác sỹ",
+            "manage-schedule": "Quản lý lịch khám"
         }
     },
     "manage-user": {
@@ -62,5 +66,11 @@
         "save-btn": "Lưu người dùng",
         "edit-btn": "Lưu thay đổi",
         "upload": "Tải ảnh lên  "
+    },
+    "manage-doctor": {
+        "title": "Tạo thông tin bác sỹ",
+        "choose-doctor": "Chọn bác sỹ",
+        "choose-date": "Chọn ngày",
+        "save-information": "Lưu thông tin"
     }
 }

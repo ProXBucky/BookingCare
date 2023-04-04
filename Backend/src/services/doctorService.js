@@ -1,5 +1,8 @@
-
 import db from "../models";
+require('dotenv').config()
+import differenceBy from 'lodash/differenceBy'
+import _ from 'lodash'
+
 
 let getTopDoctorService = (limit) => {
     return new Promise(async (resolve, reject) => {
@@ -123,10 +126,62 @@ let getDetailDoctor = (id) => {
     })
 }
 
+let createBulkScheduleService = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.arrSchedule || !data.doctorId || !data.date) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing required parameter'
+                })
+            } else {
+                let schedule = data.arrSchedule;
+                if (schedule && schedule.length > 0) {
+                    schedule.map(item => {
+                        item.maxNumber = process.env.MAX_PATIENT_PICK;
+                        return item
+                    })
+                }
+                let scheduleFromDatabase = await db.Schedule.findAll({
+                    where: { doctorId: data.doctorId },
+                    attributes: ['date', 'maxNumber', 'doctorId', 'timeType'],
+                    raw: true
+                })
+
+                if (scheduleFromDatabase && scheduleFromDatabase.length > 0) {
+                    scheduleFromDatabase.map(item => {
+                        item.date = new Date(item.date).getTime()
+                        return item
+                    })
+                }
+
+                // console.log("schedule1", schedule);
+                // console.log("schedule2", scheduleFromDatabase);
+
+                let myDifferences = _.differenceWith(schedule, scheduleFromDatabase, (a, b) => {
+                    return a.timeType === b.timeType && a.date === b.date
+                })
+                // console.log("checkkkkkkkkkkkkkkkk", myDifferences)
+                // console.log("checkkkkkkkkkkkkkkkkk")
+                await db.Schedule.bulkCreate(myDifferences)
+                resolve({
+                    errCode: 0,
+                    errMessage: 'OKE'
+                });
+
+            }
+
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 
 module.exports = {
     getTopDoctorService: getTopDoctorService,
     getAllDoctorService: getAllDoctorService,
     postInfoDoctorService: postInfoDoctorService,
     getDetailDoctor: getDetailDoctor,
+    createBulkScheduleService: createBulkScheduleService
 }

@@ -13,24 +13,23 @@ export const fetchGenderFirst = () => {
             dispatch({ type: actionTypes.FETCH_GENDER_FIRST })
             let res = await getAllCodes("GENDER");
             if (res && res.errCode === 0) {
-                dispatch(fetchGenderSuccess(res.data))
+                dispatch({
+                    type: actionTypes.FETCH_GENDER_SUCCESS,
+                    data: res.data
+                })
             } else {
-                dispatch(fetchGenderFailed())
+                dispatch({
+                    type: actionTypes.FETCH_GENDER_FAILED
+                })
             }
         } catch (e) {
-            dispatch(fetchGenderFailed())
+            dispatch({
+                type: actionTypes.FETCH_GENDER_FAILED
+            })
         }
     }
 }
 
-export const fetchGenderSuccess = (dataTmp) => ({
-    type: actionTypes.FETCH_GENDER_SUCCESS,
-    data: dataTmp
-})
-
-export const fetchGenderFailed = () => ({
-    type: actionTypes.FETCH_GENDER_FAILED
-})
 
 export const fetchRoleFirst = () => {
     return async (dispatch, getState) => {
@@ -39,24 +38,18 @@ export const fetchRoleFirst = () => {
 
             let res = await getAllCodes("ROLE");
             if (res && res.errCode === 0) {
-                dispatch(fetchRoleSuccess(res.data))
+                dispatch({
+                    type: actionTypes.FETCH_ROLE_SUCCESS,
+                    data: res.data
+                })
             } else {
-                dispatch(fetchRoleFailed())
+                dispatch({ type: actionTypes.FETCH_ROLE_FAILED })
             }
         } catch (e) {
-            dispatch(fetchRoleFailed())
+            dispatch({ type: actionTypes.FETCH_ROLE_FAILED })
         }
     }
 }
-
-export const fetchRoleSuccess = (dataTmp) => ({
-    type: actionTypes.FETCH_ROLE_SUCCESS,
-    data: dataTmp
-})
-
-export const fetchRoleFailed = () => ({
-    type: actionTypes.FETCH_ROLE_FAILED
-})
 
 export const fetchPositionFirst = () => {
     return async (dispatch, getState) => {
@@ -65,24 +58,23 @@ export const fetchPositionFirst = () => {
 
             let res = await getAllCodes("POSITION");
             if (res && res.errCode === 0) {
-                dispatch(fetchPositionSuccess(res.data))
+                dispatch({
+                    type: actionTypes.FETCH_POSITION_SUCCESS,
+                    data: res.data
+                })
             } else {
-                dispatch(fetchPositionFailed())
+                dispatch({
+                    type: actionTypes.FETCH_POSITION_FAILED,
+                })
             }
         } catch (e) {
-            dispatch(fetchPositionFailed())
+            dispatch({
+                type: actionTypes.FETCH_POSITION_FAILED,
+            })
         }
     }
 }
 
-export const fetchPositionSuccess = (dataTmp) => ({
-    type: actionTypes.FETCH_POSITION_SUCCESS,
-    data: dataTmp
-})
-
-export const fetchPositionFailed = () => ({
-    type: actionTypes.FETCH_POSITION_FAILED
-})
 
 //Post new user
 export const postNewUser = (dataTmp) => {
@@ -90,29 +82,27 @@ export const postNewUser = (dataTmp) => {
         try {
             let res = await createUserService(dataTmp)
             if (res && res.errCode === 0) {
-                dispatch(postNewUserSuccess())
+                dispatch({
+                    type: actionTypes.POST_NEW_USER_SUCCESS
+                })
                 dispatch(fetchAllUser())
                 toast.success('Create new user success <3')
             } else {
                 console.log(res)
-                dispatch(postNewUserFailed())
+                dispatch({
+                    type: actionTypes.POST_NEW_USER_FAILED
+                })
                 toast.error('Create new user failed <3')
             }
         } catch (e) {
             console.log('error from admin actions redux', e)
             toast.error('Create new user failed <3')
-            dispatch(postNewUserFailed())
+            dispatch({
+                type: actionTypes.POST_NEW_USER_FAILED
+            })
         }
     }
 }
-
-export const postNewUserSuccess = () => ({
-    type: actionTypes.POST_NEW_USER_SUCCESS
-})
-
-export const postNewUserFailed = () => ({
-    type: actionTypes.POST_NEW_USER_FAILED
-})
 
 
 //Get all user 
@@ -121,26 +111,24 @@ export const fetchAllUser = () => {
         try {
             let res = await getAllUser('ALL')
             if (res && res.errCode === 0) {
-                dispatch(fetchAllUserSuccess(res.user))
+                dispatch({
+                    type: actionTypes.FETCH_ALL_USERS_SUCCESS,
+                    user: res.user,
+                })
             } else {
                 console.log(res)
-                dispatch(fetchAllUserFailed())
+                dispatch({
+                    type: actionTypes.FETCH_ALL_USERS_FAILED,
+                })
             }
         } catch (e) {
             console.log('error from admin actions redux', e)
-            dispatch(fetchAllUserFailed())
+            dispatch({
+                type: actionTypes.FETCH_ALL_USERS_FAILED,
+            })
         }
     }
 }
-
-export const fetchAllUserSuccess = (data) => ({
-    type: actionTypes.FETCH_ALL_USERS_SUCCESS,
-    user: data,
-})
-
-export const fetchAllUserFailed = () => ({
-    type: actionTypes.FETCH_ALL_USERS_SUCCESS
-})
 
 
 // delete user in the table
@@ -150,28 +138,26 @@ export const deleteUser = (userId) => {
             let res = await deleteUserService(userId)
             if (res && res.errCode === 0) {
                 toast.success('Delete user success <3')
-                dispatch(deleteUserSuccess())
+                dispatch({
+                    type: actionTypes.DELETE_USER_SUCCESS
+                })
                 dispatch(fetchAllUser())
             } else {
                 toast.error('Delete user failed <3')
-                dispatch(deleteUserFailed())
+                dispatch({
+                    type: actionTypes.DELETE_USER_FAILED
+                })
             }
         } catch (e) {
             toast.error('Delete user failed <3')
             console.log('error from admin actions redux', e)
-            dispatch(deleteUserFailed())
-
+            dispatch({
+                type: actionTypes.DELETE_USER_FAILED
+            })
         }
     }
 }
 
-export const deleteUserSuccess = () => ({
-    type: actionTypes.DELETE_USER_SUCCESS
-})
-
-export const deleteUserFailed = () => ({
-    type: actionTypes.DELETE_USER_FAILED
-})
 
 export const editUserRedux = (user) => {
     return async (dispatch, getState) => {
@@ -179,85 +165,81 @@ export const editUserRedux = (user) => {
             let res = await editUserService(user)
             if (res && res.errCode === 0) {
                 toast.success('EDIT user success <3')
-                dispatch(editUserSuccess())
+                dispatch({
+                    type: actionTypes.EDIT_USER_SUCCESS
+                })
                 dispatch(fetchAllUser())
             } else {
                 toast.error('EDIT user failed <3')
-                dispatch(editUserFailed())
+                dispatch({
+                    type: actionTypes.EDIT_USER_FAILED
+                })
             }
         } catch (e) {
             toast.error('EDIT user failed <3')
-            dispatch(editUserFailed())
+            dispatch({
+                type: actionTypes.EDIT_USER_FAILED
+            })
 
         }
     }
 }
-
-export const editUserSuccess = () => ({
-    type: actionTypes.EDIT_USER_SUCCESS
-})
-
-export const editUserFailed = () => ({
-    type: actionTypes.EDIT_USER_FAILED
-})
 
 export const getTopDoctor = (limit) => {
     return async (dispatch, getState) => {
         try {
             let res = await getTopDoctorService(limit);
             if (res && res.errCode === 0) {
-                dispatch(getTopDoctorSuccess(res.data))
+                dispatch({
+                    type: actionTypes.GET_TOP_DOCTOR_SUCCESS,
+                    data: res.data
+                })
                 console.log('get top doctor success')
             } else {
-                dispatch(getTopDoctorFailed())
+                dispatch({
+                    type: actionTypes.GET_TOP_DOCTOR_FAILED,
+                })
                 console.log('get top doctor failed')
 
             }
         } catch (e) {
-            dispatch(getTopDoctorFailed())
+            dispatch({
+                type: actionTypes.GET_TOP_DOCTOR_FAILED,
+            })
             console.log('get top doctor failed')
 
         }
     }
 }
 
-export const getTopDoctorSuccess = (data) => ({
-    type: actionTypes.GET_TOP_DOCTOR_SUCCESS,
-    data: data
-})
-
-export const getTopDoctorFailed = () => ({
-    type: actionTypes.GET_TOP_DOCTOR_FAILED
-})
 
 export const fetchAllDoctor = () => {
     return async (dispatch, getState) => {
         try {
             let res = await getAllDoctorService();
             if (res && res.errCode === 0) {
-                dispatch(getAllDoctorSuccess(res.data))
+                dispatch({
+                    type: actionTypes.GET_ALL_DOCTOR_SUCCESS,
+                    data: res.data
+                })
                 console.log('get all doctor success')
             } else {
-                dispatch(getAllDoctorFailed())
+                dispatch({
+                    type: actionTypes.GET_ALL_DOCTOR_FAILED,
+                })
                 console.log('get all doctor failed')
 
             }
         } catch (e) {
-            dispatch(getAllDoctorFailed())
+            dispatch({
+                type: actionTypes.GET_ALL_DOCTOR_FAILED,
+            })
             console.log('get all doctor failed')
 
         }
     }
 }
 
-export const getAllDoctorSuccess = (data) => ({
-    type: actionTypes.GET_ALL_DOCTOR_SUCCESS,
-    data: data
-})
-
-export const getAllDoctorFailed = () => ({
-    type: actionTypes.GET_ALL_DOCTOR_FAILED
-})
 
 
 export const postInfoDoctor = (data) => {
@@ -267,14 +249,20 @@ export const postInfoDoctor = (data) => {
             if (res && res.errCode === 0) {
                 toast.success('Add information success')
                 console.log('get top doctor success')
-                dispatch(postInforDoctorSuccess())
+                dispatch({
+                    type: actionTypes.POST_INFO_DOCTOR_SUCCESS,
+                })
             } else {
                 toast.error('Add information failed')
                 console.log('get top doctor failed with errCode', res)
-                dispatch(postInforDoctorFailed())
+                dispatch({
+                    type: actionTypes.POST_INFO_DOCTOR_FAILED,
+                })
             }
         } catch (e) {
-            dispatch(postInforDoctorFailed())
+            dispatch({
+                type: actionTypes.POST_INFO_DOCTOR_FAILED,
+            })
             toast.error('Add information failed')
             console.log('get top doctor failed', e)
 
@@ -282,13 +270,27 @@ export const postInfoDoctor = (data) => {
     }
 }
 
-export const postInforDoctorSuccess = (data) => ({
-    type: actionTypes.POST_INFO_DOCTOR_SUCCESS,
-})
-
-export const postInforDoctorFailed = () => ({
-    type: actionTypes.POST_INFO_DOCTOR_FAILED
-})
+export const getAllcodeSchedule = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodes("TIME");
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.GET_ALLCODE_SCHEDULE_SUCCESS,
+                    data: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.GET_ALLCODE_SCHEDULE_FAILED
+                })
+            }
+        } catch (e) {
+            dispatch({
+                type: actionTypes.GET_ALLCODE_SCHEDULE_FAILED
+            })
+        }
+    }
+}
 
 
 

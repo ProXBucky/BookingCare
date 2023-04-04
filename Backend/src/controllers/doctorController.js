@@ -1,4 +1,4 @@
-import { response } from "express"
+
 import doctorService from "../services/doctorService"
 let getTopDoctor = async (req, res) => {
     try {
@@ -54,10 +54,24 @@ let getDetailDoctorById = async (req, res) => {
     }
 }
 
+let createBulkSchedule = async (req, res) => {
+    try {
+        let response = await doctorService.createBulkScheduleService(req.body)
+        return res.status(200).json(response);
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Error from server'
+        })
+    }
+}
+
 
 module.exports = {
     getTopDoctor: getTopDoctor,
     getAllDoctor: getAllDoctor,
     postInfoDoctor: postInfoDoctor,
     getDetailDoctorById: getDetailDoctorById,
+    createBulkSchedule: createBulkSchedule,
 }
