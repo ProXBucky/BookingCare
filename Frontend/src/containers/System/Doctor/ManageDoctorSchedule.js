@@ -94,9 +94,7 @@ class ManageDoctorSchedule extends Component {
 
     handleChangeDate = (date) => {
         this.setState({
-            // dataSelected: moment(date[0]).format(dateFormat.SEND_TO_SERVER)
-            // dataSelected: moment(date[0]).unix()
-            dataSelected: new Date(date[0]).getTime()
+            dataSelected: moment(date[0]).format(dateFormat.SEND_TO_SERVER)
         })
     }
 
@@ -154,7 +152,7 @@ class ManageDoctorSchedule extends Component {
                             <DatePicker
                                 className="form-control"
                                 onChange={(date) => this.handleChangeDate(date)}
-                                minDate={new Date()}
+                                minDate={new Date(new Date().setHours(0, 0, 0, 0))}
                             />
                         </div>
                     </div>

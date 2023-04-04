@@ -6,6 +6,7 @@
     background-color: white;
     top: 0px;
     z-index: 1000;
+    border-bottom: 1px solid #ccc;
 
     .home-header-content {
         width: 100%;
@@ -94,7 +95,7 @@
     background-position: center;
     display: flex;
     flex-direction: column;
-    border: 1px solid blue;
+    // border: 1px solid blue;
 
 
     .content-up {

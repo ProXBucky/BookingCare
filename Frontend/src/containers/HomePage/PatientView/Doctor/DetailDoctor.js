@@ -5,6 +5,7 @@ import { languages } from "../../../../utils"
 import './DetailDoctor.scss'
 import HomeHeader from '../../HomeHeader';
 import { getDetailDoctorByIdService } from "../../../../services/userService"
+import PickScheduleComponent from './PickScheduleComponent';
 
 
 class DetailDoctor extends Component {
@@ -14,6 +15,7 @@ class DetailDoctor extends Component {
             doctorDetail: {},
             nameVi: '',
             nameEn: '',
+            doctorIdFromParent: '',
         }
     }
 
@@ -21,6 +23,9 @@ class DetailDoctor extends Component {
     async componentDidMount() {
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
             let idDoctor = this.props.match.params.id;
+            this.setState({
+                doctorIdFromParent: idDoctor
+            })
             let res = await getDetailDoctorByIdService(idDoctor)
             if (res && res.errCode === 0) {
                 this.setState({
@@ -28,10 +33,7 @@ class DetailDoctor extends Component {
                     nameVi: `${res.data.positionData.valueVi} - ${res.data.firstName} ${res.data.lastName}`,
                     nameEn: `${res.data.positionData.valueEn} - ${res.data.lastName} ${res.data.firstName}`
                 })
-            } else {
-                console.log('error')
             }
-            // console.log('check detail by id', res)
         }
     }
 
@@ -40,9 +42,8 @@ class DetailDoctor extends Component {
     }
 
     render() {
-        let { doctorDetail } = this.state
-        // console.log(this.state)
-
+        // console.log('check state parent', this.state)
+        let { doctorDetail, doctorIdFromParent } = this.state
         return (
             <div className='detail-doctor'>
                 <HomeHeader isHideBanner={true} />
@@ -67,12 +68,14 @@ class DetailDoctor extends Component {
                             }
                         </div>
                     </div>
+                    <div className='book-calendar my-4'>
+                        <div className='schedule'>
+                            <PickScheduleComponent doctorId={doctorIdFromParent} />
+                        </div>
 
-                    <div className='schedule'>
+                        <div className='clinic'>
 
-                    </div>
-
-                    <div className='clinic'>
+                        </div>
 
                     </div>
                     <div className='office'>

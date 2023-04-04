@@ -2,6 +2,7 @@ import db from "../models";
 require('dotenv').config()
 import differenceBy from 'lodash/differenceBy'
 import _ from 'lodash'
+import { resolveInclude } from "ejs";
 
 
 let getTopDoctorService = (limit) => {
@@ -148,21 +149,21 @@ let createBulkScheduleService = (data) => {
                     raw: true
                 })
 
-                if (scheduleFromDatabase && scheduleFromDatabase.length > 0) {
-                    scheduleFromDatabase.map(item => {
-                        item.date = new Date(item.date).getTime()
-                        return item
-                    })
-                }
+                // if (scheduleFromDatabase && scheduleFromDatabase.length > 0) {
+                //     scheduleFromDatabase.map(item => {
+                //         item.date = new Date(item.date).getTime()
+                //         return item
+                //     })
+                // }
 
                 // console.log("schedule1", schedule);
                 // console.log("schedule2", scheduleFromDatabase);
 
+                //Check trùng lịch
                 let myDifferences = _.differenceWith(schedule, scheduleFromDatabase, (a, b) => {
                     return a.timeType === b.timeType && a.date === b.date
                 })
-                // console.log("checkkkkkkkkkkkkkkkk", myDifferences)
-                // console.log("checkkkkkkkkkkkkkkkkk")
+                //console.log("checkkkkkkkkkkkkkkkk", myDifferences)
                 await db.Schedule.bulkCreate(myDifferences)
                 resolve({
                     errCode: 0,
@@ -177,11 +178,40 @@ let createBulkScheduleService = (data) => {
     })
 }
 
+let getScheduleByDoctorIdAndDateService = (id, date) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!id || !date) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing parameter'
+                })
+            }
+            else {
+                let data = await db.Schedule.findAll({
+                    where: { doctorId: id, date: date },
+                    include: [
+                        { model: db.Allcode, as: 'timeTypeData', attributes: ['valueEn', 'valueVi'] },
+                    ]
+                    , raw: true, nest: true
+                })
+                resolve({
+                    errCode: 0,
+                    data: data
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 
 module.exports = {
     getTopDoctorService: getTopDoctorService,
     getAllDoctorService: getAllDoctorService,
     postInfoDoctorService: postInfoDoctorService,
     getDetailDoctor: getDetailDoctor,
-    createBulkScheduleService: createBulkScheduleService
+    createBulkScheduleService: createBulkScheduleService,
+    getScheduleByDoctorIdAndDateService: getScheduleByDoctorIdAndDateService
 }
