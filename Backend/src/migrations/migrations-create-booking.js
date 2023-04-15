@@ -18,10 +18,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       date: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       timeType: {
-        type : Sequelize.STRING
+        type: Sequelize.STRING
+      },
+      reason: {
+        type: Sequelize.TEXT
+      },
+      token: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

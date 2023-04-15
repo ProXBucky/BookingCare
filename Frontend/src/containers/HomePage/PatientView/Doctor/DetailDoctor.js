@@ -6,8 +6,7 @@ import './DetailDoctor.scss'
 import HomeHeader from '../../HomeHeader';
 import { getDetailDoctorByIdService } from "../../../../services/userService"
 import PickScheduleComponent from './PickScheduleComponent';
-
-
+import ClinicComponent from './ClinicComponent';
 class DetailDoctor extends Component {
     constructor(props) {
         super(props);
@@ -23,7 +22,7 @@ class DetailDoctor extends Component {
     async componentDidMount() {
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
             let idDoctor = this.props.match.params.id;
-            this.setState({
+            await this.setState({
                 doctorIdFromParent: idDoctor
             })
             let res = await getDetailDoctorByIdService(idDoctor)
@@ -55,7 +54,6 @@ class DetailDoctor extends Component {
                         </div>
                         <div className='doctor-intro'>
                             {
-
                                 doctorDetail && <div className='name'>{this.props.language === languages.VI ? this.state.nameVi : this.state.nameEn}</div>
                             }
                             {
@@ -64,7 +62,6 @@ class DetailDoctor extends Component {
                                 <div className='description'>
                                     {doctorDetail.Markdown.description}
                                 </div>
-
                             }
                         </div>
                     </div>
@@ -74,7 +71,7 @@ class DetailDoctor extends Component {
                         </div>
 
                         <div className='clinic'>
-
+                            <ClinicComponent doctorId={doctorIdFromParent} />
                         </div>
 
                     </div>

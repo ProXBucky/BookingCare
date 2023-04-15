@@ -10,6 +10,9 @@ const initialState = {
     doctors: [],
     doctorInfo: {},
     scheduleTime: [],
+    priceArr: [],
+    paymentArr: [],
+    provinceArr: [],
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -145,6 +148,42 @@ const adminReducer = (state = initialState, action) => {
                 ...state,
             }
         case actionTypes.GET_ALLCODE_SCHEDULE_FAILED:
+            return {
+                ...state,
+            }
+
+        case actionTypes.GET_ALLCODE_PRICE_SUCCESS:
+            console.log('fetch price success')
+            state.priceArr = action.data;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_ALLCODE_PRICE_FAILED:
+            console.log('fetch price fail')
+            return {
+                ...state,
+            }
+
+        case actionTypes.GET_ALLCODE_PAYMENT_SUCCESS:
+            console.log('fetch payment success')
+            state.paymentArr = action.data;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_ALLCODE_PAYMENT_FAILED:
+            console.log('fetch payment fail')
+            return {
+                ...state,
+            }
+
+        case actionTypes.GET_ALLCODE_PROVINCE_SUCCESS:
+            console.log('fetch province success')
+            state.provinceArr = action.data;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_ALLCODE_PROVINCE_FAILED:
+            console.log('fetch province fail')
             return {
                 ...state,
             }

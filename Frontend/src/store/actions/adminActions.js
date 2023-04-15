@@ -228,13 +228,12 @@ export const fetchAllDoctor = () => {
                     type: actionTypes.GET_ALL_DOCTOR_FAILED,
                 })
                 console.log('get all doctor failed')
-
             }
         } catch (e) {
             dispatch({
                 type: actionTypes.GET_ALL_DOCTOR_FAILED,
             })
-            console.log('get all doctor failed')
+            console.log('get all doctor failed', e)
 
         }
     }
@@ -287,6 +286,72 @@ export const getAllcodeSchedule = () => {
         } catch (e) {
             dispatch({
                 type: actionTypes.GET_ALLCODE_SCHEDULE_FAILED
+            })
+        }
+    }
+}
+
+export const getAllcodePrice = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodes("PRICE");
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.GET_ALLCODE_PRICE_SUCCESS,
+                    data: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.GET_ALLCODE_PRICE_FAILED
+                })
+            }
+        } catch (e) {
+            dispatch({
+                type: actionTypes.GET_ALLCODE_PRICE_FAILED
+            })
+        }
+    }
+}
+
+export const getAllcodePayment = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodes("PAYMENT");
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.GET_ALLCODE_PAYMENT_SUCCESS,
+                    data: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.GET_ALLCODE_PAYMENT_FAILED
+                })
+            }
+        } catch (e) {
+            dispatch({
+                type: actionTypes.GET_ALLCODE_PAYMENT_FAILED
+            })
+        }
+    }
+}
+
+export const getAllcodeProvince = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodes("PROVINCE");
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.GET_ALLCODE_PROVINCE_SUCCESS,
+                    data: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.GET_ALLCODE_PROVINCE_FAILED
+                })
+            }
+        } catch (e) {
+            dispatch({
+                type: actionTypes.GET_ALLCODE_PROVINCE_FAILED
             })
         }
     }

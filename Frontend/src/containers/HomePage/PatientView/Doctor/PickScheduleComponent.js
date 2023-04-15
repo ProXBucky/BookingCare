@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import "./PickScheduleComponent.scss"
 import moment from 'moment/moment';
-// import { FormattedMessage } from 'react-intl';
-// import { toast } from 'react-toastify';
 import { languages, dateFormat } from "../../../../utils"
-import localization from 'moment/locale/vi'
 import { getScheduleByDoctorIdAndTime } from "../../../../services/userService"
+import BookingModal from './Modal/BookingModal';
 
 
 class PickScheduleComponent extends Component {
@@ -15,7 +14,9 @@ class PickScheduleComponent extends Component {
         super(props);
         this.state = {
             dateArr: [],
-            scheduleAvailable: []
+            scheduleAvailable: [],
+            isOpenModal: false,
+            scheduleBooked: {}
 
         }
     }
@@ -74,7 +75,6 @@ class PickScheduleComponent extends Component {
         this.setState({
             scheduleAvailable: res.data
         })
-        // console.log(res);
     }
 
 
@@ -97,12 +97,19 @@ class PickScheduleComponent extends Component {
         }
     }
 
+    handleBookingSchedule = async (item) => {
+        await this.setState({
+            isOpenModal: !this.state.isOpenModal,
+            scheduleBooked: item
+        })
+        // console.log('check item', this.state)
+    }
+
 
 
     render() {
         let { dateArr, scheduleAvailable } = this.state
         let { language } = this.props
-        // console.log('cehck prop child', this.props)
         return (
             <div className='schedule-container'>
                 <div className='select-schedule-calendar'>
@@ -111,14 +118,18 @@ class PickScheduleComponent extends Component {
                             dateArr && dateArr.length > 0
                             && dateArr.map((item, index) => {
                                 return (
-                                    <option key={index} value={item.value}>{item.label}</option>
+                                    <option key={index}
+                                        value={item.value}
+                                    >
+                                        {item.label}
+                                    </option>
                                 )
                             })
                         }
                     </select>
                 </div>
 
-                <span><i className="fas fa-calendar calendar-title"></i> Lịch khám</span>
+                <span><i className="fas fa-calendar calendar-title"></i> <FormattedMessage id="pick-component.schedule-title"></FormattedMessage></span>
                 <div className='pick-schedule'>
                     {
                         scheduleAvailable && scheduleAvailable.length > 0 ?
@@ -126,20 +137,20 @@ class PickScheduleComponent extends Component {
                                 {
                                     scheduleAvailable.map((item, index) => {
                                         return (
-                                            <button key={index}>{languages.VI === language ? item.timeTypeData.valueVi : item.timeTypeData.valueEn}</button>
+                                            <button key={index} onClick={() => this.handleBookingSchedule(item)}>{languages.VI === language ? item.timeTypeData.valueVi : item.timeTypeData.valueEn}</button>
                                         )
                                     })
                                 }
                                 <br></br>
-                                <div className='sub-title'>Chọn <span><i class="fas fa-hand-point-up"></i></span> và đặt (Phí đặt lịch 0đ)</div>
+                                <div className='sub-title'><FormattedMessage id="pick-component.extra-title1"></FormattedMessage> <span><i className="fas fa-hand-point-up"></i></span> <FormattedMessage id="pick-component.extra-title2"></FormattedMessage></div>
                             </>
                             :
                             <div>
-                                Bác sỹ không có lịch khám, vui lòng chọn lịch khác
+                                <FormattedMessage id="pick-component.no-schedule"></FormattedMessage>
                             </div>
                     }
                 </div>
-
+                <BookingModal doctorId={this.props.doctorId} isOpenModal={this.state.isOpenModal} handleOpenModal={this.handleBookingSchedule} scheduleBooked={this.state.scheduleBooked} />
             </div>
         )
     }

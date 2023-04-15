@@ -72,5 +72,42 @@
         "choose-doctor": "Choose doctor",
         "choose-date": "Choose date",
         "save-information": "Save information"
+    },
+    "doctor-information": {
+        "title": "Add extra doctor's informations",
+        "choose-doctor": "Choose doctor",
+        "extra-information": "Description information",
+        "price": "Price",
+        "payment": "Payment method",
+        "province": "Province",
+        "clinic-name": "Clinic Name",
+        "clinic-address": "Clinic Address",
+        "note": "Note"
+    },
+    "pick-component": {
+        "schedule-title": "Examination schedule",
+        "extra-title1": "Pick",
+        "extra-title2": "and book (Book fee 0d)",
+        "no-schedule": "Doctor doesn't have schedule, please pick diffirent schedule"
+    },
+    "clinic": {
+        "address": "Address Clinic",
+        "price": "Price: ",
+        "show": " Show extra information ",
+        "hide": "Hide extra information ",
+        "title1": "Get priority medical care before visiting through BookingCare. The cost of medical examination for foreigners is 30 USD ",
+        "title2": "Patients can pay in cash and by swiping a card "
+    },
+    "modal-booking": {
+        "header": "Appoint's information",
+        "price": "Price",
+        "firstName": "FirstName",
+        "lastName": "LastName",
+        "phoneNumber": "Phone number",
+        "email": "Email",
+        "gender": "Gender",
+        "address": "Address",
+        "reason": "Reason",
+        "submit": "Submit"
     }
 }

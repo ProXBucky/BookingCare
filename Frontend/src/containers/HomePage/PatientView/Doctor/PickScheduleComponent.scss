@@ -1,5 +1,5 @@
 .schedule-container {
-    border-right: 1px solid #ccc;
+    // border-right: 1px solid #ccc;
 
     .select-schedule-calendar {
         select {
@@ -10,6 +10,11 @@
             border-bottom: 1px solid #999;
             cursor: pointer;
         }
+
+    }
+
+    span {
+        text-transform: uppercase;
     }
 
     .calendar-title {

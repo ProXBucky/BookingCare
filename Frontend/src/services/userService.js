@@ -1,3 +1,4 @@
+import { relativeTimeRounding } from 'moment';
 import axios from '../axios';
 
 const handleLoginAPI = (email, password) => {
@@ -50,9 +51,26 @@ const getScheduleByDoctorIdAndTime = (id, date) => {
     return axios.get(`/api/get-schedule-doctor-by-doctorid-and-date?id=${id}&date=${date}`)
 }
 
+const getDoctorInfoById = (doctorId) => {
+    return axios.get(`/api/get-doctor-info-by-id?doctorId=${doctorId}`)
+}
+
+const getExtraInfoById = (doctorId) => {
+    return axios.get(`/api/get-extra-info-doctor-by-id?doctorId=${doctorId}`)
+}
+
+const postBookingAppointment = (data) => {
+    return axios.post('/api/post-booking-appointment', data)
+}
+
+const postVerifyingEmail = (data) => {
+    return axios.post('/api/post-verifying-email', data)
+}
+
 export {
     handleLoginAPI, getAllUser, createUserService,
     deleteUserService, editUserService, getAllCodes,
     getTopDoctorService, getAllDoctorService, postInfoDoctorService,
-    getDetailDoctorByIdService, createBulkSchedule, getScheduleByDoctorIdAndTime
+    getDetailDoctorByIdService, createBulkSchedule, getScheduleByDoctorIdAndTime, getDoctorInfoById,
+    getExtraInfoById, postBookingAppointment, postVerifyingEmail
 }

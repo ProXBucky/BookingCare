@@ -72,5 +72,42 @@
         "choose-doctor": "Chọn bác sỹ",
         "choose-date": "Chọn ngày",
         "save-information": "Lưu thông tin"
+    },
+    "doctor-information": {
+        "title": "Tạo thêm thông tin bác sỹ",
+        "choose-doctor": "Chọn bác sỹ",
+        "extra-information": "Thông tin giới thiệu",
+        "price": "Giá khám",
+        "payment": "Phương thức thanh toán",
+        "province": "Tỉnh thành",
+        "clinic-name": "Tên phòng khám",
+        "clinic-address": "Địa chỉ phòng khám",
+        "note": "Ghi chú"
+    },
+    "pick-component": {
+        "schedule-title": "Lịch khám",
+        "extra-title1": "Chọn",
+        "extra-title2": "và đặt lịch (Phí đặt 0d)",
+        "no-schedule": "Bác sỹ không có lịch hẹn, vui lòng chọn lịch khác"
+    },
+    "clinic": {
+        "address": "ĐỊA CHỈ KHÁM ",
+        "price": "Giá khám: ",
+        "show": " Xem chi tiết ",
+        "hide": "Ẩn bảng giá ",
+        "title1": "Được ưu tiên khám trước khi đật khám qua BookingCare. Giá khám cho người nước ngoài là 30 USD ",
+        "title2": "Người bệnh có thể thanh toán chi phí bằng hình thức tiền mặt và quẹt thẻ "
+    },
+    "modal-booking": {
+        "header": "Thông tin tạo lịch hẹn",
+        "price": "Giá",
+        "firstName": "Họ",
+        "lastName": "Tên",
+        "phoneNumber": "Số điện thoại",
+        "email": "Địa chỉ Email",
+        "gender": "Giới tính",
+        "address": "Địa chỉ",
+        "reason": "Lý do khám",
+        "submit": "Xác nhận"
     }
 }
