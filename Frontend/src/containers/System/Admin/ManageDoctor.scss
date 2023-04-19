@@ -1,4 +1,6 @@
 .manage-doctor-container {
+    margin: 0px 20px;
+
     .manage-doctor-title {
         text-align: center;
         padding: 10px 0px;
@@ -15,6 +17,11 @@
         .input-body {
             display: flex;
             gap: 15px;
+
+            &.optimize {
+                gap: 5px !important;
+                margin: 0px 5px 0px 0px;
+            }
 
             .body-left {
                 width: 40%;

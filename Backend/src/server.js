@@ -3,12 +3,12 @@ import bodyParser from "body-parser"
 import viewEngine from "./config/viewEngine"
 import initWebRoutes from "./router/web"
 import connectDB from "./config/connectDB"
-// import cors from "cors"
 require('dotenv').config()
 
 let app = express()
 
 // Add headers before the routes are defined
+// fix cors error
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect

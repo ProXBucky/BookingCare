@@ -2,12 +2,58 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import "./Specialty.scss"
 import { FormattedMessage } from 'react-intl'
+import { getAllSpecialty } from "../../../services/userService"
+import { withRouter } from "react-router-dom";
 
 import Slider from "react-slick"
 
 class Specialty extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            allSpecialties: [],
+            specialtyArr: [],
+        }
+    }
+
+    createSpecialtyArray = () => {
+        let result = []
+        if (this.state.allSpecialties && this.state.allSpecialties.length > 0) {
+            this.state.allSpecialties.map((item) => {
+                let obj = {};
+                obj.name = item.name
+                obj.image = item.image
+                obj.id = item.id
+                result.push(obj)
+            })
+        }
+        return result
+    }
+
+    async componentDidMount() {
+        let res = await getAllSpecialty();
+        if (res && res.errCode === 0) {
+            this.setState({
+                allSpecialties: res.data
+            })
+        }
+        let dataArr = this.createSpecialtyArray();
+        this.setState({
+            specialtyArr: dataArr
+        })
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+    }
+
+    handleDetailSpecialty = (item) => {
+        this.props.history.push(`/detail-specialty/${item.id}`)
+    }
 
     render() {
+        let { specialtyArr } = this.state
+        console.log('check state', this.state)
         return (
             <div className='section-container specialty-content'>
                 <div className='content-section'>
@@ -17,38 +63,21 @@ class Specialty extends Component {
                     </div>
                     <div className='section-slider'>
                         <Slider {...this.props.settings}>
-                            <div className='slider'>
-                                <div className='image'></div>
-                                <span className='title-slider'>Cơ xương khớp</span>
-                            </div>
-                            <div className='slider'>
-                                <div className='image'></div>
-                                <span className='title-slider'>Thần kinh</span>
-                            </div>
-                            <div className='slider'>
-                                <div className='image'></div>
-                                <span className='title-slider'>Tiêu hóa</span>
-                            </div>
-                            <div className='slider'>
-                                <div className='image'></div>
-                                <span className='title-slider'>Tim mạch</span>
-                            </div>
-                            <div className='slider'>
-                                <div className='image'></div>
-                                <span className='title-slider'>Tai mũi họng</span>
-                            </div>
-                            <div className='slider'>
-                                <div className='image'></div>
-                                <span className='title-slider'>Cột sống</span>
-                            </div>
-                            <div className='slider'>
-                                <div className='image'></div>
-                                <span className='title-slider'>Y học cổ truyền</span>
-                            </div>
-                            <div className='slider'>
-                                <div className='image'></div>
-                                <span className='title-slider'>Châm cứu</span>
-                            </div>
+                            {
+                                specialtyArr && specialtyArr.length > 0 &&
+                                specialtyArr.map((item, index) => {
+                                    let imageBase64 = '';
+                                    if (item.image) {
+                                        imageBase64 = new Buffer(item.image, 'base64').toString('Binary');    //decode image avatar from buffer to base64
+                                    }
+                                    return (
+                                        <div className='slider' key={index} onClick={() => this.handleDetailSpecialty(item)}>
+                                            <div className='image' style={{ backgroundImage: `url(${imageBase64})` }}></div>
+                                            <span className='title-slider '>{item.name}</span>
+                                        </div>
+                                    )
+                                })
+                            }
                         </Slider>
                     </div>
                 </div>
@@ -69,4 +98,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specialty);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Specialty));

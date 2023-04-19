@@ -82,7 +82,9 @@
         "province": "Province",
         "clinic-name": "Clinic Name",
         "clinic-address": "Clinic Address",
-        "note": "Note"
+        "note": "Note",
+        "specialty": "Specialty",
+        "clinic": "Clinic"
     },
     "pick-component": {
         "schedule-title": "Examination schedule",
@@ -96,7 +98,7 @@
         "show": " Show extra information ",
         "hide": "Hide extra information ",
         "title1": "Get priority medical care before visiting through BookingCare. The cost of medical examination for foreigners is 30 USD ",
-        "title2": "Patients can pay in cash and by swiping a card "
+        "title2": "Patients can pay by:  "
     },
     "modal-booking": {
         "header": "Appoint's information",
@@ -109,5 +111,11 @@
         "address": "Address",
         "reason": "Reason",
         "submit": "Submit"
+    },
+    "specialty-manage": {
+        "title": "CREATE THE SPECIALTY INFORMATION",
+        "name-specialty": "Specialty Name",
+        "image-specialty": "Specialty Image",
+        "button-save": "Save"
     }
 }

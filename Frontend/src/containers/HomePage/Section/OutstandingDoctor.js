@@ -57,7 +57,7 @@ class OutstandingDoctor extends Component {
                                         <div className='slider' key={index} onClick={() => this.handleDetailDoctor(item)}>
                                             <div className='outer'>
                                                 <div className='image'
-                                                    style={{ backgroundImage: `url(${imageBase64})` }}
+                                                    style={{ background: `url(${imageBase64}) center center no-repeat` }}
                                                 >
                                                 </div>
                                                 <div className='title-slider text-center'>

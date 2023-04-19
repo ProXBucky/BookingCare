@@ -10,10 +10,7 @@ import * as actions from "../../../../../store/actions"
 import Select from 'react-select';
 import { postBookingAppointment } from "../../../../../services/userService"
 import { toast } from 'react-toastify';
-
-
-
-
+import DoctorInfo from '../DoctorInfo';
 
 class BookingModal extends Component {
 
@@ -36,6 +33,16 @@ class BookingModal extends Component {
     }
     async componentDidMount() {
         this.props.getGenderRedux()
+        let res = await getExtraInfoById(this.props.doctorId);
+        if (res && res.errCode === 0) {
+            if (res.data && res.data.positionData) {
+                this.setState({
+                    doctorInformation: res.data,
+                    nameVi: `${res.data.positionData.valueVi} - ${res.data.firstName} ${res.data.lastName}`,
+                    nameEn: `${res.data.positionData.valueEn} - ${res.data.lastName} ${res.data.firstName}`
+                })
+            }
+        }
 
     }
 
@@ -59,11 +66,13 @@ class BookingModal extends Component {
         if (prevProps.doctorId !== this.props.doctorId) {
             let res = await getExtraInfoById(this.props.doctorId);
             if (res && res.errCode === 0) {
-                this.setState({
-                    doctorInformation: res.data,
-                    nameVi: `${res.data.positionData.valueVi} - ${res.data.firstName} ${res.data.lastName}`,
-                    nameEn: `${res.data.positionData.valueEn} - ${res.data.lastName} ${res.data.firstName}`
-                })
+                if (res.data && res.data.positionData) {
+                    this.setState({
+                        doctorInformation: res.data,
+                        nameVi: `${res.data.positionData.valueVi} - ${res.data.firstName} ${res.data.lastName}`,
+                        nameEn: `${res.data.positionData.valueEn} - ${res.data.lastName} ${res.data.firstName}`
+                    })
+                }
             }
         }
         if (prevProps.genders !== this.props.genders) {
@@ -150,6 +159,7 @@ class BookingModal extends Component {
                                 </div>
 
                                 <div className='content-right'>
+                                    {/* <DoctorInfo isHideDescription="true" isHideDoctorInformation="false" /> */}
                                     <div className='doctor-name'>
                                         {
                                             this.state.nameVi && languages.VI === this.props.language &&

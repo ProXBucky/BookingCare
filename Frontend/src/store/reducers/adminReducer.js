@@ -13,6 +13,8 @@ const initialState = {
     priceArr: [],
     paymentArr: [],
     provinceArr: [],
+    specialtyArr: [],
+    clinicArr: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -184,6 +186,17 @@ const adminReducer = (state = initialState, action) => {
             }
         case actionTypes.GET_ALLCODE_PROVINCE_FAILED:
             console.log('fetch province fail')
+            return {
+                ...state,
+            }
+        case actionTypes.GET_ALL_SPECIALTY_SUCCESS:
+            console.log('fetch specialty success')
+            state.specialtyArr = action.data;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_ALL_SPECIALTY_FAILED:
+            console.log('fetch specialty fail')
             return {
                 ...state,
             }

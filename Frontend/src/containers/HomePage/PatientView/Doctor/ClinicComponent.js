@@ -19,11 +19,14 @@ class ClinicComponent extends Component {
 
 
     async componentDidMount() {
-
+        let res = await getDoctorInfoById(this.props.doctorId)
+        if (res && res.errCode === 0) {
+            this.setState({
+                doctorInformation: res.data
+            })
+        }
 
     }
-
-
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.doctorId !== this.props.doctorId) {
@@ -45,7 +48,7 @@ class ClinicComponent extends Component {
 
     render() {
         let { doctorInformation } = this.state
-        // console.log(doctorInformation)
+        console.log(doctorInformation)
         return (
             <div className='clinic-container'>
                 <div className='clinic col-12'>
@@ -88,7 +91,7 @@ class ClinicComponent extends Component {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><FormattedMessage id="clinic.title2"></FormattedMessage></td>
+                                            <td><FormattedMessage id="clinic.title2"></FormattedMessage>{this.props.language === languages.VI ? doctorInformation.paymentData.valueVi : doctorInformation.paymentData.valueEn}</td>
                                         </tr>
                                     </tbody>
                                 </table>

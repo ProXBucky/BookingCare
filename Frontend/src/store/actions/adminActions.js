@@ -2,7 +2,7 @@ import actionTypes from './actionTypes';
 import {
     getAllCodes, createUserService, getAllUser, deleteUserService,
     editUserService, getTopDoctorService, getAllDoctorService,
-    postInfoDoctorService, getDetailDoctorByIdService
+    postInfoDoctorService, getDetailDoctorByIdService, getAllSpecialty
 } from '../../services/userService';
 import { toast } from 'react-toastify';
 
@@ -352,6 +352,29 @@ export const getAllcodeProvince = () => {
         } catch (e) {
             dispatch({
                 type: actionTypes.GET_ALLCODE_PROVINCE_FAILED
+            })
+        }
+    }
+}
+
+export const getAllSpecialtyRedux = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllSpecialty();
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.GET_ALL_SPECIALTY_SUCCESS,
+                    data: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.GET_ALL_SPECIALTY_FAILED
+                })
+            }
+
+        } catch (e) {
+            dispatch({
+                type: actionTypes.GET_ALL_SPECIALTY_FAILED
             })
         }
     }

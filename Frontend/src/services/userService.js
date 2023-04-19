@@ -67,10 +67,28 @@ const postVerifyingEmail = (data) => {
     return axios.post('/api/post-verifying-email', data)
 }
 
+const postSpecialtyInformation = (data) => {
+    return axios.post('/api/post-specialty-information', data)
+}
+
+const getAllSpecialty = () => {
+    return axios.get('/api/get-all-specialty');
+}
+
+const getDetailSpecialty = (id) => {
+    return axios.get(`/api/get-detail-specialty-by-id?id=${id}`)
+}
+
+const getDoctorBySpecialtyId = (id) => {
+    return axios.get(`/api/get-doctor-by-specialty-id?id=${id}`)
+}
+
 export {
     handleLoginAPI, getAllUser, createUserService,
     deleteUserService, editUserService, getAllCodes,
     getTopDoctorService, getAllDoctorService, postInfoDoctorService,
     getDetailDoctorByIdService, createBulkSchedule, getScheduleByDoctorIdAndTime, getDoctorInfoById,
-    getExtraInfoById, postBookingAppointment, postVerifyingEmail
+    getExtraInfoById, postBookingAppointment, postVerifyingEmail, postSpecialtyInformation, getAllSpecialty,
+    getDetailSpecialty, getDoctorBySpecialtyId
+
 }

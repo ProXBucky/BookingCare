@@ -82,7 +82,9 @@
         "province": "Tỉnh thành",
         "clinic-name": "Tên phòng khám",
         "clinic-address": "Địa chỉ phòng khám",
-        "note": "Ghi chú"
+        "note": "Ghi chú",
+        "specialty": "Chuyên khoa",
+        "clinic": "Phòng khám"
     },
     "pick-component": {
         "schedule-title": "Lịch khám",
@@ -96,7 +98,7 @@
         "show": " Xem chi tiết ",
         "hide": "Ẩn bảng giá ",
         "title1": "Được ưu tiên khám trước khi đật khám qua BookingCare. Giá khám cho người nước ngoài là 30 USD ",
-        "title2": "Người bệnh có thể thanh toán chi phí bằng hình thức tiền mặt và quẹt thẻ "
+        "title2": "Người bệnh có thể thanh toán chi phí bằng hình thức:  "
     },
     "modal-booking": {
         "header": "Thông tin tạo lịch hẹn",
@@ -109,5 +111,11 @@
         "address": "Địa chỉ",
         "reason": "Lý do khám",
         "submit": "Xác nhận"
+    },
+    "specialty-manage": {
+        "title": "Tạo thông tin chuyên khoa",
+        "name-specialty": "Tên chuyên khoa",
+        "image-specialty": "Ảnh minh họa",
+        "button-save": "Lưu thông tin"
     }
 }

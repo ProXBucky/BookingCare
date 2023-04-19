@@ -49,19 +49,39 @@ let getAllDoctorService = () => {
     })
 }
 
+// let validateInput = (input) => {
+//     let check = true;
+//     let missingPara = ''
+//     let arr = ['doctorId', 'contentHTML', 'contentMarkdown', 'description', 'action', 'price', 'payment', 'province', 'clinicName', 'clinicAddress', 'note', 'specialty', 'clinic']
+//     for (let i = 0; i < arr.length; i++) {
+//         if (!input.arr[i]) {
+//             missingPara = arr[i];
+//             check = false;
+//             break;
+//         }
+//     }
+//     return check, missingPara
+// }
 
+// if (validateInput(doctor).check === false) {
+//     resolve({
+//         errCode: 1,
+//         errMessage: `Missing parameter: ${validateInput(doctor).missingPara}`
+//     })
 let postInfoDoctorService = (doctor) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!doctor.doctorId || !doctor.contentHTML || !doctor.contentMarkdown || !doctor.description || !doctor.action
-                || !doctor.price || !doctor.payment || !doctor.province || !doctor.clinicName || !doctor.clinicAddress || !doctor.note
-            ) {
+                || !doctor.price || !doctor.payment || !doctor.province || !doctor.clinicName || !doctor.clinicAddress || !doctor.note || !doctor.specialty
+            )
+            // || !doctor.clinic
+            {
                 resolve({
                     errCode: 1,
                     errMessage: "Missing parameter"
                 })
             } else {
-                console.log('check input: ', doctor)
+                // console.log('check input: ', doctor)
                 if (doctor.action === 'CREATE') {
                     await db.Markdown.create({
                         doctorId: doctor.doctorId,
@@ -95,7 +115,9 @@ let postInfoDoctorService = (doctor) => {
                         provinceId: doctor.province.value,
                         nameClinic: doctor.clinicName,
                         addressClinic: doctor.clinicAddress,
-                        note: doctor.note
+                        note: doctor.note,
+                        specialtyId: doctor.specialty,
+                        clinicId: doctor.clinic
                     },
                         { where: { doctorId: doctorSelect.doctorId } }
                     )
@@ -108,6 +130,8 @@ let postInfoDoctorService = (doctor) => {
                         nameClinic: doctor.clinicName,
                         addressClinic: doctor.clinicAddress,
                         note: doctor.note,
+                        specialtyId: doctor.specialty,
+                        clinicId: doctor.clinic
                     })
                 }
             }
@@ -138,7 +162,7 @@ let getDetailDoctor = (id) => {
                         { model: db.Markdown, attributes: ['description', 'contentHTML', 'contentMarkdown'] },
                         { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
                         {
-                            model: db.Doctor_Info, attributes: ['provinceId', 'paymentId', 'priceId', 'addressClinic', 'nameClinic', 'note', 'count'],
+                            model: db.Doctor_Info, attributes: ['provinceId', 'paymentId', 'priceId', 'addressClinic', 'nameClinic', 'note', 'count', 'specialtyId', 'clinicId'],
                             include: [
                                 { model: db.Allcode, as: 'provinceData', attributes: ['valueEn', 'valueVi', 'keyMap'] },
                                 { model: db.Allcode, as: 'paymentData', attributes: ['valueEn', 'valueVi', 'keyMap'] },

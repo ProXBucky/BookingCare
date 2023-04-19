@@ -7,13 +7,11 @@ import HomeHeader from '../../HomeHeader';
 import { getDetailDoctorByIdService } from "../../../../services/userService"
 import PickScheduleComponent from './PickScheduleComponent';
 import ClinicComponent from './ClinicComponent';
+import DoctorInfo from './DoctorInfo';
 class DetailDoctor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            doctorDetail: {},
-            nameVi: '',
-            nameEn: '',
             doctorIdFromParent: '',
         }
     }
@@ -25,14 +23,7 @@ class DetailDoctor extends Component {
             await this.setState({
                 doctorIdFromParent: idDoctor
             })
-            let res = await getDetailDoctorByIdService(idDoctor)
-            if (res && res.errCode === 0) {
-                this.setState({
-                    doctorDetail: res.data,
-                    nameVi: `${res.data.positionData.valueVi} - ${res.data.firstName} ${res.data.lastName}`,
-                    nameEn: `${res.data.positionData.valueEn} - ${res.data.lastName} ${res.data.firstName}`
-                })
-            }
+
         }
     }
 
@@ -41,31 +32,15 @@ class DetailDoctor extends Component {
     }
 
     render() {
-        // console.log('check state parent', this.state)
         let { doctorDetail, doctorIdFromParent } = this.state
         return (
             <div className='detail-doctor'>
                 <HomeHeader isHideBanner={true} />
                 <div className='detail-doctor-container'>
                     <div className='doctor-information'>
-                        <div className='image-doctor'>
-                            <div className='avatar' style={{ backgroundImage: `url(${doctorDetail.image})` }}>
-                            </div>
-                        </div>
-                        <div className='doctor-intro'>
-                            {
-                                doctorDetail && <div className='name'>{this.props.language === languages.VI ? this.state.nameVi : this.state.nameEn}</div>
-                            }
-                            {
-                                doctorDetail && doctorDetail.Markdown && doctorDetail.Markdown.description
-                                &&
-                                <div className='description'>
-                                    {doctorDetail.Markdown.description}
-                                </div>
-                            }
-                        </div>
+                        <DoctorInfo doctorId={doctorIdFromParent} isHideDoctorInformation={false} isHideDescription={true} />
                     </div>
-                    <div className='book-calendar my-4'>
+                    <div className='book-calendar'>
                         <div className='schedule'>
                             <PickScheduleComponent doctorId={doctorIdFromParent} />
                         </div>
@@ -73,15 +48,9 @@ class DetailDoctor extends Component {
                         <div className='clinic'>
                             <ClinicComponent doctorId={doctorIdFromParent} />
                         </div>
-
                     </div>
                     <div className='office'>
-                        {
-                            doctorDetail && doctorDetail.Markdown && doctorDetail.Markdown.contentHTML
-                            &&
-                            <div dangerouslySetInnerHTML={{ __html: doctorDetail.Markdown.contentHTML }}>
-                            </div>
-                        }
+                        <DoctorInfo doctorId={doctorIdFromParent} isHideDoctorInformation={true} isHideDescription={false} />
                     </div>
                 </div>
             </div >

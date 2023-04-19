@@ -77,13 +77,15 @@ class PickScheduleComponent extends Component {
         })
     }
 
-
-
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.language !== this.props.language) {
             let arrDate = await this.arrDateByLanguage(this.props.language)
             this.setState({
                 dateArr: arrDate
+            })
+            let res = await getScheduleByDoctorIdAndTime(this.props.doctorId, this.state.dateArr[0].value)
+            this.setState({
+                scheduleAvailable: res.data
             })
         }
     }
@@ -102,10 +104,7 @@ class PickScheduleComponent extends Component {
             isOpenModal: !this.state.isOpenModal,
             scheduleBooked: item
         })
-        // console.log('check item', this.state)
     }
-
-
 
     render() {
         let { dateArr, scheduleAvailable } = this.state
@@ -118,9 +117,7 @@ class PickScheduleComponent extends Component {
                             dateArr && dateArr.length > 0
                             && dateArr.map((item, index) => {
                                 return (
-                                    <option key={index}
-                                        value={item.value}
-                                    >
+                                    <option key={index} value={item.value}>
                                         {item.label}
                                     </option>
                                 )
