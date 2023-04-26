@@ -47,7 +47,8 @@
         },
         "doctor": {
             "manage-doctor": "Quản lý bác sỹ",
-            "manage-schedule": "Quản lý lịch khám"
+            "manage-schedule": "Quản lý lịch khám",
+            "manage-patient": "Quản lý bệnh nhân"
         }
     },
     "manage-user": {
@@ -72,6 +73,22 @@
         "choose-doctor": "Chọn bác sỹ",
         "choose-date": "Chọn ngày",
         "save-information": "Lưu thông tin"
+    },
+    "manage-patient": {
+        "title": "Quản lý bệnh nhân",
+        "choose-date": "Chọn ngày",
+        "order": "STT",
+        "time": "Thời gian",
+        "name": "Họ tên",
+        "address": "Địa chỉ",
+        "gender": "Giới tính",
+        "phone": "SĐT",
+        "action": "Hành động",
+        "confirm": "Xác nhận",
+        "no-data": "Không có dữ liệu",
+        "title1": "Xác nhận đơn thuốc",
+        "email": "Địa chỉ Email",
+        "prescription": "Đơn thuốc"
     },
     "doctor-information": {
         "title": "Tạo thêm thông tin bác sỹ",
@@ -117,5 +134,15 @@
         "name-specialty": "Tên chuyên khoa",
         "image-specialty": "Ảnh minh họa",
         "button-save": "Lưu thông tin"
+    },
+    "clinic-manage": {
+        "title": "Tạo thông tin phòng khám",
+        "address-specialty": "Địa chỉ phòng khám",
+        "name-specialty": "Tên phòng khám",
+        "image-specialty": "Ảnh minh họa",
+        "button-save": "Lưu thông tin"
+    },
+    "see-more": {
+        "see": "Xem thêm"
     }
 }

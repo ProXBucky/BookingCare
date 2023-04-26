@@ -4,15 +4,14 @@ import { connect } from 'react-redux';
 import { languages } from "../../../../utils"
 import './DetailSpecialty.scss'
 import HomeHeader from '../../HomeHeader';
-import { getDetailSpecialty } from "../../../../services/userService"
+import HomeFooter from '../../HomeFooter';
+import { getDetailSpecialtyAndDoctorByLocation } from "../../../../services/userService"
 import PickScheduleComponent from '../Doctor/PickScheduleComponent';
 import ClinicComponent from '../Doctor/ClinicComponent';
 import DoctorInfo from '../Doctor/DoctorInfo';
-import { getDoctorBySpecialtyId } from "../../../../services/userService"
 import * as actions from '../../../../store/actions'
 import Select from 'react-select';
-
-
+import { Link } from "react-router-dom"
 
 class DetailSpecialty extends Component {
     constructor(props) {
@@ -23,24 +22,28 @@ class DetailSpecialty extends Component {
             doctorsBySpecialty: [],
             arrDoctorId: [],
             provinceArr: [],
-            provinceSelected: ''
         }
     }
 
     getDoctorBySpecialtyId = async (id) => {
-        let respone = await getDoctorBySpecialtyId(id)
+        let respone = await getDetailSpecialtyAndDoctorByLocation(id, 'ALL')
         if (respone && respone.errCode === 0) {
             this.setState({
-                arrDoctorId: respone.data
+                arrDoctorId: respone.doctorsBySpecialty
             })
         }
     }
 
     setAllcodeOptions = (input) => {
         let allCode = []
+        let df = {
+            value: 'ALL',
+            label: languages.VI === this.props.language ? 'Tất cả' : 'All country'
+        }
+        allCode.push(df)
         if (input[0].type === 'PROVINCE') {
             if (input && input.length > 0) {
-                input.map((item, index) => {
+                input.map((item) => {
                     let objDoctor = {}
                     objDoctor.value = item.keyMap
                     objDoctor.label = languages.VI === this.props.language ? item.valueVi : item.valueEn
@@ -55,20 +58,20 @@ class DetailSpecialty extends Component {
         this.props.getAllcodeProvince();
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
             let idSpecialty = this.props.match.params.id;
+            await this.getDoctorBySpecialtyId(idSpecialty)
             await this.setState({
                 specialtyIdFromParam: idSpecialty
             })
-            await this.getDoctorBySpecialtyId(idSpecialty)
             if (this.state && this.state.arrDoctorId) {
                 let result = []
                 this.state.arrDoctorId.map((item) => {
                     result.push(item.doctorId)
                 })
                 this.setState({
-                    doctorsBySpecialty: result
+                    doctorsBySpecialty: result,
                 })
             }
-            let res = await getDetailSpecialty(idSpecialty)
+            let res = await getDetailSpecialtyAndDoctorByLocation(idSpecialty, 'ALL')
             if (res && res.errCode === 0) {
                 this.setState({
                     specialtyDetail: res.data,
@@ -84,19 +87,35 @@ class DetailSpecialty extends Component {
                 provinceArr: provinceArr
             })
         }
+
+        if (prevProps.language !== this.props.language) {
+            let provinceArr = this.setAllcodeOptions(this.props.provinceArr)
+            this.setState({
+                provinceArr: provinceArr
+            })
+        }
     }
 
-
-    handleChangeMarkdown = async (selectedOption, name) => {
-        let copyState = { ...this.state }
-        copyState[name.name] = selectedOption;
-        await this.setState({
-            ...copyState
-        })
+    handleChangeProvince = async (selectedOption) => {
+        let res = await getDetailSpecialtyAndDoctorByLocation(this.state.specialtyIdFromParam, selectedOption.value)
+        if (res && res.errCode === 0) {
+            this.setState({
+                arrDoctorId: res.doctorsBySpecialty
+            })
+        }
+        if (this.state && this.state.arrDoctorId) {
+            let result = []
+            this.state.arrDoctorId.map((item) => {
+                result.push(item.doctorId)
+            })
+            this.setState({
+                doctorsBySpecialty: result
+            })
+        }
     }
 
     render() {
-        console.log('cehck state', this.state)
+        // console.log('cehck state', this.state)
         let { specialtyDetail, doctorsBySpecialty } = this.state
         return (
             <div className='detail-specialty'>
@@ -114,9 +133,8 @@ class DetailSpecialty extends Component {
                         <Select
                             className='select-province'
                             value={this.state.provinceSelected}
-                            onChange={this.handleChangeMarkdown}
+                            onChange={this.handleChangeProvince}
                             options={this.state.provinceArr}
-                            name="provinceSelected"
                             placeholder={<FormattedMessage id="doctor-information.province"></FormattedMessage>}
                         />
                         {
@@ -126,6 +144,9 @@ class DetailSpecialty extends Component {
                                     <div className='container my-4' key={index}>
                                         <div className='content-left'>
                                             <DoctorInfo doctorId={item} isHideDoctorInformation={false} isHideDescription={true} />
+                                            <div className='see-more'>
+                                                <Link className='see-more-link' to={`/detail-doctor/${item}`} ><FormattedMessage id={"see-more.see"}></FormattedMessage></Link>
+                                            </div>
                                         </div>
                                         <div className='content-right'>
                                             <div className='up'>
@@ -141,8 +162,8 @@ class DetailSpecialty extends Component {
                             })
                         }
                     </div>
-
                 </div >
+                <HomeFooter />
             </div >
         )
     }

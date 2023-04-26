@@ -50,7 +50,7 @@ let postBookingAppointmentService = (data) => {
                             token: token
                         }
                     });
-                    console.log(buildURLVerify(data.doctorId, token))
+                    // console.log(buildURLVerify(data.doctorId, token))
                     await postEmail(res[0], respone[0].date, data.doctorName, data.timeAppoint, data.language, buildURLVerify(data.doctorId, token))
                 }
                 resolve({

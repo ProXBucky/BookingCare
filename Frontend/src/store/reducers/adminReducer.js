@@ -200,6 +200,17 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
+        case actionTypes.GET_ALL_CLINIC_SUCCESS:
+            console.log('fetch CLINIC success')
+            state.clinicArr = action.data;
+            return {
+                ...state,
+            }
+        case actionTypes.GET_ALL_CLINIC_FAILED:
+            console.log('fetch CLINIC fail')
+            return {
+                ...state,
+            }
         default:
             return state;
     }

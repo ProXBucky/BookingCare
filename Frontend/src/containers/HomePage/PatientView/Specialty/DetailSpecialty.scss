@@ -30,6 +30,16 @@
                     width: 50%;
                     margin-top: 20px;
 
+                    .see-more {
+                        margin: 10px 30px;
+
+                        .see-more-link {
+                            color: #45c3d2;
+                            cursor: pointer;
+                            text-decoration: none;
+                        }
+                    }
+
                 }
 
                 .content-right {

@@ -26,22 +26,9 @@ let getAllSpecialty = async (req, res) => {
     }
 }
 
-let getDetailSpecialtyById = async (req, res) => {
+let getDetailSpecialtyByIdAndDoctorByLocation = async (req, res) => {
     try {
-        let respone = await specialtyService.getDetailSpecialtyById(req.query.id);
-        return res.status(200).json(respone)
-    } catch (e) {
-        console.log(e);
-        return res.status(200).json({
-            errCode: -1,
-            errMessage: "Error from server"
-        })
-    }
-}
-
-let getDoctorBySpecialtyId = async (req, res) => {
-    try {
-        let respone = await specialtyService.getDoctorBySpecialtyId(req.query.id);
+        let respone = await specialtyService.getDetailSpecialtyByIdAndDoctorByLocation(req.query.id, req.query.location);
         return res.status(200).json(respone)
     } catch (e) {
         console.log(e);
@@ -55,6 +42,5 @@ let getDoctorBySpecialtyId = async (req, res) => {
 module.exports = {
     postSpecialtyInformation,
     getAllSpecialty,
-    getDetailSpecialtyById,
-    getDoctorBySpecialtyId
+    getDetailSpecialtyByIdAndDoctorByLocation,
 }

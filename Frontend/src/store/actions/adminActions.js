@@ -2,7 +2,8 @@ import actionTypes from './actionTypes';
 import {
     getAllCodes, createUserService, getAllUser, deleteUserService,
     editUserService, getTopDoctorService, getAllDoctorService,
-    postInfoDoctorService, getDetailDoctorByIdService, getAllSpecialty
+    postInfoDoctorService, getDetailDoctorByIdService, getAllSpecialty,
+    getAllClinic
 } from '../../services/userService';
 import { toast } from 'react-toastify';
 
@@ -379,6 +380,30 @@ export const getAllSpecialtyRedux = () => {
         }
     }
 }
+
+export const getAllClinicRedux = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllClinic();
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.GET_ALL_CLINIC_SUCCESS,
+                    data: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.GET_ALL_CLINIC_FAILED
+                })
+            }
+
+        } catch (e) {
+            dispatch({
+                type: actionTypes.GET_ALL_CLINIC_FAILED
+            })
+        }
+    }
+}
+
 
 
 

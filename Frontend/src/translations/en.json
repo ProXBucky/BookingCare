@@ -47,7 +47,8 @@
         },
         "doctor": {
             "manage-doctor": "Manage Doctor",
-            "manage-schedule": "Manage Schedule"
+            "manage-schedule": "Manage Schedule",
+            "manage-patient": "Manage Patient"
         }
     },
     "manage-user": {
@@ -72,6 +73,22 @@
         "choose-doctor": "Choose doctor",
         "choose-date": "Choose date",
         "save-information": "Save information"
+    },
+    "manage-patient": {
+        "title": "Manage the patient",
+        "choose-date": "Choose date",
+        "order": "Order",
+        "time": "Time",
+        "name": "Name",
+        "address": "Address",
+        "gender": "Gender",
+        "phone": "Phone Number",
+        "action": "Action",
+        "confirm": "Confirm",
+        "no-data": "No Data",
+        "title1": "Confirm the prescription",
+        "email": "Email",
+        "prescription": "Prescription"
     },
     "doctor-information": {
         "title": "Add extra doctor's informations",
@@ -117,5 +134,15 @@
         "name-specialty": "Specialty Name",
         "image-specialty": "Specialty Image",
         "button-save": "Save"
+    },
+    "clinic-manage": {
+        "title": "CREATE THE CLINIC INFORMATION",
+        "name-specialty": "Clinic Name",
+        "image-specialty": "Clinic Image",
+        "address-specialty": "Clinic Address",
+        "button-save": "Save"
+    },
+    "see-more": {
+        "see": "See more"
     }
 }

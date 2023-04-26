@@ -16,8 +16,14 @@ class HomeHeader extends Component {
         this.props.history.push('/home')
     }
 
+    scrollDown = (ref) => {
+        window.scrollTo({
+            top: ref.current.offsetTop,
+            behavior: 'smooth',
+        });
+    };
+
     render() {
-        // console.log(this.props)
         return (
             <React.Fragment>
                 <div className='home-header-container'>

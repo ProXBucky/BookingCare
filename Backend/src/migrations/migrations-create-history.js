@@ -2,9 +2,9 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('histories', {
-        // patientId: DataTypes.INTEGER,
-        // doctorId: DataTypes.INTEGER,
-        // description: DataTypes.TEXT,
+      // patientId: DataTypes.INTEGER,
+      // doctorId: DataTypes.INTEGER,
+      // description: DataTypes.TEXT,
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,11 +17,8 @@ module.exports = {
       doctorId: {
         type: Sequelize.INTEGER
       },
-      description: {
-        type: Sequelize.TEXT
-      },
       files: {
-        type: Sequelize.TEXT
+        type: Sequelize.BLOB('long')
       },
       createdAt: {
         allowNull: false,

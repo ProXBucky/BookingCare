@@ -4,13 +4,12 @@ import { connect } from 'react-redux';
 import { languages, CRUD_METHOD } from "../../../utils"
 import * as actions from '../../../store/actions'
 import './ManageDoctor.scss'
-import { getDetailDoctorByIdService, getDetailSpecialty } from "../../../services/userService"
+import { getDetailDoctorByIdService, getDetailSpecialtyAndDoctorByLocation, getDetailClinicById } from "../../../services/userService"
 
 import Select from 'react-select';
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
-import { conforms } from 'lodash';
 const mdParser = new MarkdownIt
 
 
@@ -40,7 +39,7 @@ class ManageDoctor extends Component {
             paymentArr: [],
             provinceArr: [],
             specialtyArr: [],
-            clincArr: []
+            clinicArr: []
         }
     }
 
@@ -51,6 +50,7 @@ class ManageDoctor extends Component {
         this.props.getAllcodePayment();
         this.props.getAllcodeProvince();
         this.props.getAllSpecialty();
+        this.props.getAllClinic();
     }
 
     handleSetDoctorOptions = (input) => {
@@ -70,7 +70,7 @@ class ManageDoctor extends Component {
 
     setAllcodeOptions = (input) => {
         let allCode = []
-        if (input[0].type === 'PRICE') {
+        if (input[0] && input[0].type === 'PRICE') {
             if (input && input.length > 0) {
                 input.map((item, index) => {
                     let objDoctor = {}
@@ -80,7 +80,7 @@ class ManageDoctor extends Component {
                 })
             }
         }
-        if (input[0].type === 'PAYMENT') {
+        if (input[0] && input[0].type === 'PAYMENT') {
             if (input && input.length > 0) {
                 input.map((item, index) => {
                     let objDoctor = {}
@@ -90,7 +90,7 @@ class ManageDoctor extends Component {
                 })
             }
         }
-        if (input[0].type === 'PROVINCE') {
+        if (input[0] && input[0].type === 'PROVINCE') {
             if (input && input.length > 0) {
                 input.map((item, index) => {
                     let objDoctor = {}
@@ -106,7 +106,7 @@ class ManageDoctor extends Component {
     setOptions = (input) => {
         let result = []
         if (input && input.length > 0) {
-            input.map((item, index) => {
+            input.map((item) => {
                 let objDoctor = {}
                 objDoctor.value = item.id
                 objDoctor.label = item.name
@@ -147,19 +147,27 @@ class ManageDoctor extends Component {
                 specialtyArr: specialtyArr
             })
         }
+        if (prevProps.clinicArr !== this.props.clinicArr) {
+            let clinicArr = this.setOptions(this.props.clinicArr)
+            this.setState({
+                clinicArr: clinicArr
+            })
+        }
         if (prevProps.language !== this.props.language) {
             let listDoctor = this.handleSetDoctorOptions(this.props.doctors)
             let priceArr = this.setAllcodeOptions(this.props.priceArr)
             let paymentArr = this.setAllcodeOptions(this.props.paymentArr)
             let provinceArr = this.setAllcodeOptions(this.props.provinceArr)
             let specialtyArr = this.setOptions(this.props.specialtyArr)
+            let clinicArr = this.setOptions(this.props.clinicArr)
 
             this.setState({
                 doctorArr: listDoctor,
                 priceArr: priceArr,
                 paymentArr: paymentArr,
                 provinceArr: provinceArr,
-                specialtyArr: specialtyArr
+                specialtyArr: specialtyArr,
+                clinicArr: clinicArr
             })
         }
     }
@@ -201,10 +209,16 @@ class ManageDoctor extends Component {
             if (resTmp && resTmp.errCode === 0 && resTmp.data && resTmp.data.Doctor_Info && resTmp.data.Doctor_Info.provinceId && resTmp.data.Doctor_Info.specialtyId) {
                 let doctorInfo = resTmp.data.Doctor_Info
                 let obj4 = {}
-                let res = await getDetailSpecialty(resTmp.data.Doctor_Info.specialtyId)
+                let obj5 = {}
+                let res = await getDetailSpecialtyAndDoctorByLocation(resTmp.data.Doctor_Info.specialtyId, 'ALL')
                 if (res && res.errCode === 0) {
                     obj4.value = res.data.id;
                     obj4.label = res.data.name;
+                }
+                let res1 = await getDetailClinicById(resTmp.data.Doctor_Info.clinicId)
+                if (res1 && res1.errCode === 0) {
+                    obj5.value = res1.data.id;
+                    obj5.label = res1.data.name;
                 }
                 let obj1 = {}
                 obj1.value = doctorInfo.provinceData.keyMap;
@@ -224,7 +238,7 @@ class ManageDoctor extends Component {
                     clinicAddress: doctorInfo.addressClinic,
                     note: doctorInfo.note,
                     specialtySelected: obj4,
-                    // clinicSelected: obj5,
+                    clinicSelected: obj5,
                 })
             }
             else {
@@ -236,7 +250,7 @@ class ManageDoctor extends Component {
                     clinicAddress: '',
                     note: '',
                     specialtySelected: '',
-                    // clinicSelected: obj5,
+                    clinicSelected: ''
                 })
             }
         }
@@ -251,7 +265,7 @@ class ManageDoctor extends Component {
     }
 
     handleSaveInfoDoctor = () => {
-        console.log('check state', this.state)
+        // console.log('check state', this.state)
         this.props.postInfoDoctor({
             doctorId: this.state.doctorSelected.value,
             contentHTML: this.state.contentHTML,
@@ -288,7 +302,7 @@ class ManageDoctor extends Component {
     }
 
     render() {
-        console.log('check prop', this.state)
+        console.log('check prop', this.props.specialtyArr)
         return (
             <div className='manage-doctor-container'>
                 <div className='manage-doctor-title'><b><FormattedMessage id="doctor-information.title"></FormattedMessage></b></div>
@@ -406,6 +420,7 @@ const mapStateToProps = state => {
         paymentArr: state.admin.paymentArr,
         provinceArr: state.admin.provinceArr,
         specialtyArr: state.admin.specialtyArr,
+        clinicArr: state.admin.clinicArr,
         language: state.app.language
     };
 };
@@ -418,6 +433,7 @@ const mapDispatchToProps = dispatch => {
         getAllcodeProvince: () => dispatch(actions.getAllcodeProvince()),
         postInfoDoctor: (data) => dispatch(actions.postInfoDoctor(data)),
         getAllSpecialty: () => dispatch(actions.getAllSpecialtyRedux()),
+        getAllClinic: () => dispatch(actions.getAllClinicRedux()),
     };
 };
 

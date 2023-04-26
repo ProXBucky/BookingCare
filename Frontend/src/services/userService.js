@@ -1,5 +1,6 @@
 import { relativeTimeRounding } from 'moment';
 import axios from '../axios';
+import { result } from 'lodash';
 
 const handleLoginAPI = (email, password) => {
     return axios.post('/api/login', { email, password })
@@ -75,20 +76,36 @@ const getAllSpecialty = () => {
     return axios.get('/api/get-all-specialty');
 }
 
-const getDetailSpecialty = (id) => {
-    return axios.get(`/api/get-detail-specialty-by-id?id=${id}`)
+const getDetailSpecialtyAndDoctorByLocation = (id, location) => {
+    return axios.get(`/api/get-detail-specialty-by-id-and-doctor-by-location?id=${id}&location=${location}`)
 }
 
-const getDoctorBySpecialtyId = (id) => {
-    return axios.get(`/api/get-doctor-by-specialty-id?id=${id}`)
+const postClinicInformation = (data) => {
+    return axios.post('/api/post-clinic-information', data)
 }
 
+const getAllClinic = () => {
+    return axios.get('/api/get-all-clinic');
+}
+
+const getDetailClinicById = (id) => {
+    return axios.get(`/api/get-detail-clinic-by-id?id=${id}`)
+}
+
+const getListPatientBooking = (id, date) => {
+    return axios.get(`/api/get-list-patient-by-day?id=${id}&date=${date}`)
+}
+
+const postThePrescription = (data) => {
+    return axios.post('/api/post-the-prescription', data)
+}
 export {
     handleLoginAPI, getAllUser, createUserService,
     deleteUserService, editUserService, getAllCodes,
     getTopDoctorService, getAllDoctorService, postInfoDoctorService,
     getDetailDoctorByIdService, createBulkSchedule, getScheduleByDoctorIdAndTime, getDoctorInfoById,
     getExtraInfoById, postBookingAppointment, postVerifyingEmail, postSpecialtyInformation, getAllSpecialty,
-    getDetailSpecialty, getDoctorBySpecialtyId
+    getDetailSpecialtyAndDoctorByLocation, postClinicInformation, getAllClinic, getDetailClinicById,
+    getListPatientBooking, postThePrescription
 
 }

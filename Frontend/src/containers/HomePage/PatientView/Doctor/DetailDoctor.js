@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { languages } from "../../../../utils"
 import './DetailDoctor.scss'
 import HomeHeader from '../../HomeHeader';
-import { getDetailDoctorByIdService } from "../../../../services/userService"
+import HomeFooter from '../../HomeFooter';
 import PickScheduleComponent from './PickScheduleComponent';
 import ClinicComponent from './ClinicComponent';
 import DoctorInfo from './DoctorInfo';
@@ -53,6 +53,7 @@ class DetailDoctor extends Component {
                         <DoctorInfo doctorId={doctorIdFromParent} isHideDoctorInformation={true} isHideDescription={false} />
                     </div>
                 </div>
+                <HomeFooter />
             </div >
         )
     }

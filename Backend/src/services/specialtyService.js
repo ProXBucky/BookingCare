@@ -44,48 +44,38 @@ let getAllSpecialty = () => {
     })
 }
 
-let getDetailSpecialtyById = (id) => {
+let getDetailSpecialtyByIdAndDoctorByLocation = (id, location) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!id) {
+            if (!id || !location) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing parameter'
                 })
             } else {
+                let dataTmp = {};
                 let data = await db.Specialty.findOne({
                     where: { id: id },
                     attributes: { include: ['name', 'id', 'descriptionHTML'] },
                 })
+                if (data) {
+                    if (location === 'ALL') {
+                        dataTmp = await db.Doctor_Info.findAll({
+                            where: { specialtyId: id },
+                            attributes: ['doctorId'],
+                        })
+                    } else {
+                        dataTmp = await db.Doctor_Info.findAll({
+                            where: { specialtyId: id, provinceId: location },
+                            attributes: ['doctorId'],
+                        })
+                    }
+                }
                 resolve({
                     errCode: 0,
                     errMessage: "Get data success",
                     data: data ? data : {},
-                })
-            }
-        } catch (e) {
-            reject(e);
-        }
-    })
-}
-
-let getDoctorBySpecialtyId = (id) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            if (!id) {
-                resolve({
-                    errCode: 1,
-                    errMessage: 'Missing parameter'
-                })
-            } else {
-                let data = await db.Doctor_Info.findAll({
-                    where: { specialtyId: id },
-                    attributes: ['doctorId'],
-                })
-                resolve({
-                    errCode: 0,
-                    errMessage: "Get data success",
-                    data: data ? data : {},
+                    doctorsBySpecialty: dataTmp
                 })
             }
         } catch (e) {
@@ -97,6 +87,5 @@ let getDoctorBySpecialtyId = (id) => {
 module.exports = {
     postSpecialtyInformationService,
     getAllSpecialty,
-    getDetailSpecialtyById,
-    getDoctorBySpecialtyId
+    getDetailSpecialtyByIdAndDoctorByLocation,
 }

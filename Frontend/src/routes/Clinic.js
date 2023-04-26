@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Header from '../containers/Header/Header';
-import ManageSpecialty from '../containers/System/Admin/Specialty/ManageSpecialty';
+import ManageClinic from '../containers/System/Admin/Clinic/ManageClinic';
 
-class Specialty extends Component {
+class Clinic extends Component {
     render() {
         return (
             <div className="system-container">
                 {this.props.isLoggedIn && <Header />}
                 <div className="system-list">
                     <Switch>
-                        <Route path="/specialty/manage-specialty" component={ManageSpecialty} />
+                        <Route path="/clinic/manage-clinic" component={ManageClinic} />
                     </Switch>
                 </div>
             </div>
@@ -30,4 +30,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specialty);
+export default connect(mapStateToProps, mapDispatchToProps)(Clinic);

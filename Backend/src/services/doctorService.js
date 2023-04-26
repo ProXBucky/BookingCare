@@ -1,6 +1,7 @@
 import db from "../models";
 require('dotenv').config()
-import differenceBy from 'lodash/differenceBy'
+// import differenceBy from 'lodash/differenceBy'
+import { postEmailPrescription } from "../services/gmailService"
 import _ from 'lodash'
 
 
@@ -72,7 +73,8 @@ let postInfoDoctorService = (doctor) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!doctor.doctorId || !doctor.contentHTML || !doctor.contentMarkdown || !doctor.description || !doctor.action
-                || !doctor.price || !doctor.payment || !doctor.province || !doctor.clinicName || !doctor.clinicAddress || !doctor.note || !doctor.specialty
+                || !doctor.price || !doctor.payment || !doctor.province || !doctor.clinicName || !doctor.clinicAddress
+                || !doctor.note || !doctor.specialty || !doctor.clinic
             )
             // || !doctor.clinic
             {
@@ -337,6 +339,91 @@ let getExtraInfoByIdService = (doctorId) => {
     })
 }
 
+let getListPatientByDayService = (id, date) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!id || !date) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing parameter'
+                })
+            } else {
+                let data = await db.Booking.findAll({
+                    where: { doctorId: id, date: date, statusId: 'S2' },    //find all patient booked and confirmed
+                    include: [
+                        {
+                            model: db.User, as: 'patientData', attributes: ['firstName', 'lastName', 'address', 'gender', 'phoneNumber', 'email'],
+                            include: [
+                                {
+                                    model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi']
+                                },
+                            ]
+                        },
+                        {
+                            model: db.Allcode, as: 'timeTypeData2', attributes: ['valueEn', 'valueVi'],
+                        }
+                    ],
+                    raw: 'true',
+                    nest: 'true',
+                })
+                resolve({
+                    errCode: 0,
+                    data: data ? data : {}
+                })
+
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+let postThePrescription = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // check neu k co trong database moi create
+            if (!data.email || !data.doctorId || !data.patientId || !data.filePrescription || !data.date || !data.timeType || !data.language) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing required parameter"
+                })
+            } else {
+
+                //update statusId S3
+                let values = {
+                    statusId: 'S3'
+                };
+                let selector = {
+                    where: {
+                        doctorId: data.doctorId,
+                        patientId: data.patientId,
+                        date: data.date,
+                        timeType: data.timeType,
+                        statusId: 'S2'
+                    }
+                };
+                await db.Booking.update(values, selector);
+
+
+                // Create history for patient
+                await db.History.create({
+                    patientId: data.patientId,
+                    doctorId: data.doctorId,
+                    files: data.filePrescription
+                })
+
+                await postEmailPrescription(data.email, data.date, data.language, data.filePrescription)
+                resolve({
+                    errCode: 0,
+                    errMessage: 'Exam done'
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 
 module.exports = {
     getTopDoctorService: getTopDoctorService,
@@ -346,5 +433,7 @@ module.exports = {
     createBulkScheduleService: createBulkScheduleService,
     getScheduleByDoctorIdAndDateService: getScheduleByDoctorIdAndDateService,
     getDetailDoctorByIdService: getDetailDoctorByIdService,
-    getExtraInfoByIdService: getExtraInfoByIdService
+    getExtraInfoByIdService: getExtraInfoByIdService,
+    getListPatientByDayService,
+    postThePrescription
 }

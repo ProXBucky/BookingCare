@@ -44,7 +44,7 @@ class Login extends Component {
             }
             if (data && data.errCode === 0) {
                 this.props.userLoginSuccess(data.user);
-                console.log('loging success');
+                console.log('logging success');
             }
 
         } catch (e) {

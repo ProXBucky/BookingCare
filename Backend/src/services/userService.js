@@ -7,7 +7,7 @@ let handleLoginPage = (emailTemp, passwordTemp) => {
     return new Promise(async (resolve, reject) => {
         try {
             let isExist = await checkEmailExist(emailTemp);
-            var attributes = ['email', 'password', 'roleId', 'firstName', 'lastName'];
+            var attributes = ['email', 'password', 'roleId', 'firstName', 'lastName', 'id'];
             if (isExist) {
                 let user = await db.User.findOne({
                     where: { email: emailTemp },

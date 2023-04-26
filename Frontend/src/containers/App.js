@@ -16,7 +16,10 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import VerifyEmail from './HomePage/PatientView/VerifyEmail';
 import Specialty from '../routes/Specialty';
+import Clinic from '../routes/Clinic';
 import DetailSpecialty from './HomePage/PatientView/Specialty/DetailSpecialty';
+import DetailClinic from './HomePage/PatientView/Clinic/DetailClinic';
+
 class App extends Component {
 
     handlePersistorState = () => {
@@ -52,8 +55,11 @@ class App extends Component {
                                     <Route path={path.DOCTOR} component={userIsAuthenticated(Doctor)} />
                                     <Route path={path.DETAIL_DOCTOR} component={(DetailDoctor)} />
                                     <Route path={path.VERIFY_APPOINTMENT} component={(VerifyEmail)} />
-                                    <Route path={path.SPECIALTY} component={userIsAuthenticated(Specialty)} />
+                                    <Route path={path.SPECIALTY} component={(Specialty)} />
                                     <Route path={path.DETAIL_SPECIALTY} component={(DetailSpecialty)} />
+                                    <Route path={path.CLINIC} component={(Clinic)} />
+                                    <Route path={path.DETAIL_CLINIC} component={(DetailClinic)} />
+
                                 </Switch>
                             </CustomScrollBars>
                         </div>

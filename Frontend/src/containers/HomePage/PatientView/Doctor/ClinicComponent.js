@@ -57,8 +57,7 @@ class ClinicComponent extends Component {
                         {
                             doctorInformation && doctorInformation.nameClinic && <span>{doctorInformation.nameClinic}</span>
                         }
-                        <br></br>
-                        {
+                        <br></br>                        {
                             doctorInformation && doctorInformation.addressClinic && <span>{doctorInformation.addressClinic}</span>
                         }
                     </div>
